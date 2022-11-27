@@ -82,6 +82,6 @@ test:
 production:
   <<: *default
   url: <%= ENV['DATABASE_URL'] %>
-  database: phase_4_final_project_production
-  username: phase_4_final_project
-  password: <%= ENV["PHASE_4_FINAL_PROJECT_DATABASE_PASSWORD"] %>
+  # database: phase_4_final_project_production
+  # username: phase_4_final_project
+  # password: <%= ENV["PHASE_4_FINAL_PROJECT_DATABASE_PASSWORD"] %>
