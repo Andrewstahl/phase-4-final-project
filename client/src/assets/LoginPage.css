@@ -1,0 +1,39 @@
+:root {
+  --label-purple: rgb(84, 77, 184);
+}
+
+label {
+  color: var(--label-purple);
+  font-weight: bolder;
+}
+
+form {
+  padding: 20px;
+  margin: 1em 10em;
+  background-color: rgb(249, 246, 246);
+}
+
+input[type=text], [type=password] {
+  width: 100%;
+  /* text-align: center; */
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+input[type=submit], button.cancel {
+  width: 50%;
+  background-color: var(--label-purple);
+  color: white;
+  font-weight: bold;
+  font-size: 20px;
+  padding: 14px 20px;
+  margin: 8px 5px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  align-items: center;
+}
