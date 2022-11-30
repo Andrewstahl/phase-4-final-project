@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+  # resources :users
+  post '/signup', to: 'users#create'
+
   get '/hello', to: 'application#hello_world'
 
   get '*path',
