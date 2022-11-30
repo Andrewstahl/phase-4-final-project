@@ -29,7 +29,9 @@ function App() {
       .then((data) => setCount(data.count));
   }, []);
 
-  if (!user) return <SignUpForm />;
+  if (!user) return <SignUpForm onLogin={setUser} />;
+
+  console.log(user)
 
   return (
     // <BrowserRouter>
@@ -39,7 +41,8 @@ function App() {
             <h1>Test Route</h1>
           </Route>
           <Route path="/">
-            <h1>Page Count: {count}</h1>
+            {/* <h1>Page Count: {count}</h1> */}
+            <h1>Welcome, {user.username}</h1>
           </Route>
         </Switch>
       </main>

@@ -1,13 +1,35 @@
 import React, { useState } from "react";
 
-function SignUpForm() {
+function SignUpForm({ onLogin }) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [passwordConfirmation, setPasswordConfirmation] = useState("");
   const [errors, setErrors] = useState([]);
 
+  function handleSubmit(e) {
+    e.preventDefault()
+    setErrors([])
+    fetch("/signup", {
+      method: "POST",
+      headers: {
+        "CONTENT-TYPE": "application/json"
+      },
+      body: JSON.stringify({
+        username,
+        password,
+        password_confirmation: passwordConfirmation
+      })
+    }).then((r) => {
+      if (r.ok) {
+        r.json().then(user => onLogin(user))
+      } else {
+        r.json().then((err) => setErrors(err.errors))
+      }
+    })
+  }
+
   return (
-    <form >
+    <form onSubmit={(e) => handleSubmit(e)}>
       <div>
         <label htmlFor="username">Username</label>
         <input
