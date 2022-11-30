@@ -1,4 +1,7 @@
 import React, { useState } from "react";
+import Error from "../styles/Error";
+import "../assets/LoginPage.css"
+// import "../"
 
 function SignUpForm({ onLogin }) {
   const [username, setUsername] = useState("");
@@ -30,6 +33,9 @@ function SignUpForm({ onLogin }) {
 
   return (
     <form onSubmit={(e) => handleSubmit(e)}>
+      <div>
+        <h1>Signup Now</h1>
+      </div>
       <div>
         <label htmlFor="username">Username</label>
         <input
@@ -64,14 +70,11 @@ function SignUpForm({ onLogin }) {
         />
       </div>
       <div>
-        <button type="submit">Submit</button>
+        <input type="submit" value="Submit" />
       </div>
       <div>
         {errors.map((err) => (
-          <>
-            <span>!</span>
-            <p>{err}</p>
-          </>
+          <Error key={err} props={err}>{err}</Error>
         ))}
       </div>
     </form>
