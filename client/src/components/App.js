@@ -1,7 +1,26 @@
 import { useState, useEffect } from "react";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
+import SignUpForm from "../pages/SignUpForm";
+
+/**
+ * App Hierarchy
+ * 
+ * App
+ * ├─── Login Page
+ * ├─── Signup Page
+ * ├─── Header
+ * ├─── NavBar
+ * ├─── User Home
+ * └─── Habit
+ *      ├─── Habit
+ *      ├─── Habit
+ *      └─── Habit
+ * 
+ */
 
 function App() {
+  const [user, setUser] = useState(null);
+
   const [count, setCount] = useState(0);
 
   useEffect(() => {
@@ -10,9 +29,11 @@ function App() {
       .then((data) => setCount(data.count));
   }, []);
 
+  if (!user) return <SignUpForm />;
+
   return (
-    <BrowserRouter>
-      <div className="App">
+    // <BrowserRouter>
+      <main>
         <Switch>
           <Route path="/testing">
             <h1>Test Route</h1>
@@ -21,8 +42,8 @@ function App() {
             <h1>Page Count: {count}</h1>
           </Route>
         </Switch>
-      </div>
-    </BrowserRouter>
+      </main>
+    // {/* </BrowserRouter> */}
   );
 }
 
