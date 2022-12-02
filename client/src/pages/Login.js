@@ -44,7 +44,7 @@ function Login({ onLogin }) {
 }
 
 const Divider = styled.hr`
-  border-bottom: 1px solid #000;
+  border-bottom: 1px solid grey;
   margin: 10px 0;
 `;
 
