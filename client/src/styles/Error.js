@@ -32,6 +32,8 @@ const Alert = styled.span`
 
 const ErrorMessage = styled.p`
   margin: 0;
+  font-weight: bold;
+  font-style: italic;
 `
 
 export default Error
