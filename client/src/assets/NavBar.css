@@ -3,5 +3,5 @@ button {
   font-weight: bold;
   background-color: rgb(84, 77, 184);
   color: white;
-  opacity: 75%;
+  /* opacity: 75%; */
 }
