@@ -1,7 +1,5 @@
 import React, { useState } from "react";
 import Error from "../styles/Error";
-import "../assets/LoginPage.css"
-// import "../"
 
 function SignUpForm({ onLogin }) {
   const [username, setUsername] = useState("");
@@ -23,6 +21,7 @@ function SignUpForm({ onLogin }) {
         password_confirmation: passwordConfirmation
       })
     }).then((r) => {
+      // r.json().then(data => console.log(data))
       if (r.ok) {
         r.json().then(user => onLogin(user))
       } else {
@@ -34,7 +33,7 @@ function SignUpForm({ onLogin }) {
   return (
     <form onSubmit={(e) => handleSubmit(e)}>
       <div>
-        <h1>Signup Now</h1>
+        <h1>Sign Up Now</h1>
       </div>
       <div>
         <label htmlFor="username">Username</label>
