@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 import Login from "../pages/Login";
+import NavBar from "./NavBar";
 
 /**
  * App Hierarchy
@@ -34,6 +35,7 @@ function App() {
 
   return (
     <BrowserRouter>
+      <NavBar setUser={setUser} />
       <main>
         <Switch>
           <Route path="/testing">
