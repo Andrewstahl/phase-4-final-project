@@ -59,16 +59,16 @@ function NavBar({ setUser }) {
             isActive ? linkStylesActive : linkStyles 
           )}
         >
-          Books
+          Daily Log
         </NavLink>
         <NavLink 
-          to="/reviews"
+          to="/testing"
           exact
           style={({ isActive }) => (
             isActive ? linkStylesActive : linkStyles 
           )}
         >
-          Reviews
+          Profile
         </NavLink>
         <button onClick={handleLogoutClick}>Logout</button>
       </div>
