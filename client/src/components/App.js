@@ -1,13 +1,14 @@
 import { useState, useEffect } from "react";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
-import SignUpForm from "./SignUpForm";
+import Login from "../pages/Login";
 
 /**
  * App Hierarchy
  * 
  * App
  * ├─── Login Page
- * ├─── Signup Page
+ *      ├─── Login
+ *      ├─── Signup
  * ├─── Header
  * ├─── NavBar
  * ├─── User Home
@@ -21,20 +22,18 @@ import SignUpForm from "./SignUpForm";
 function App() {
   const [user, setUser] = useState(null);
 
-  const [count, setCount] = useState(0);
-
   useEffect(() => {
-    fetch("/hello")
-      .then((r) => r.json())
-      .then((data) => setCount(data.count));
+    fetch("/me").then((r) => {
+      if (r.ok) {
+        r.json().then((user) => setUser(user))
+      }
+    })
   }, []);
 
-  if (!user) return <SignUpForm onLogin={setUser} />;
-
-  console.log(user)
+  if (!user) return <Login onLogin={setUser} />;
 
   return (
-    // <BrowserRouter>
+    <BrowserRouter>
       <main>
         <Switch>
           <Route path="/testing">
@@ -46,7 +45,7 @@ function App() {
           </Route>
         </Switch>
       </main>
-    // {/* </BrowserRouter> */}
+    </BrowserRouter>
   );
 }
 
