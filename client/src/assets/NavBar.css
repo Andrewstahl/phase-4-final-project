@@ -1,0 +1,7 @@
+button {
+  border-radius: 25%;
+  font-weight: bold;
+  background-color: rgb(84, 77, 184);
+  color: white;
+  opacity: 75%;
+}
