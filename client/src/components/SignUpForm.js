@@ -21,7 +21,6 @@ function SignUpForm({ onLogin }) {
         password_confirmation: passwordConfirmation
       })
     }).then((r) => {
-      // r.json().then(data => console.log(data))
       if (r.ok) {
         r.json().then(user => onLogin(user))
       } else {
