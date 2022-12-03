@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  resources :user_habits
+  resources :habits
   # resources :users, only: [:create, :show, :update, :delete]
   post '/signup', to: 'users#create'
   get '/me', to: 'users#show'
