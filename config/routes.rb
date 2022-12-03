@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :logs
   resources :user_habits
   resources :habits
   resources :users
