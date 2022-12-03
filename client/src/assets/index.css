@@ -59,3 +59,13 @@ input[type=submit], button.cancel, button.login__signup__switch__button {
   border-radius: 4px;
   cursor: pointer;
 }
+
+div.habit-element-container {
+  border: 1px;
+  max-width: 300px;
+  /* width: 100%; */
+  border-color: black;
+  border-style: solid;
+  text-align: center;
+  /* display: inline-block; */
+}

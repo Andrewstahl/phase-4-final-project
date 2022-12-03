@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 import Login from "../pages/Login";
 import NavBar from "./NavBar";
+import Habits from "../pages/Habits";
 
 /**
  * App Hierarchy
@@ -45,8 +46,8 @@ function App() {
             <h1>Test Route</h1>
           </Route>
           <Route path="/">
-            {/* <h1>Page Count: {count}</h1> */}
             <h1>Welcome, {user.username}</h1>
+            <Habits user={user}/>
           </Route>
         </Switch>
       </main>
