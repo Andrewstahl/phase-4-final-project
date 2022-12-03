@@ -1,17 +1,23 @@
 class UsersController < ApplicationController
   rescue_from ActiveRecord::RecordInvalid, with: :render_unprocessable_entity_response
 
+  # GET /users
+  def index
+    render json: User.all
+  end
+  
+  # POST /users
   def create
     user = User.create!(user_params)
     session[:user_id] = user.id
-    # byebug
     render json: user, status: :created
   end
-
+  
+  # GET /users/:id
   def show
     user = User.find(session[:user_id])
     if user
-      render json: user
+      render json: user, include: :habits
     else
       render json: { error: "Unauthorized User" }, status: unauthorized
     end
