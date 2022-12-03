@@ -42,12 +42,15 @@ function App() {
       <NavBar setUser={setUser} />
       <main>
         <Switch>
-          <Route path="/testing">
-            <h1>Test Route</h1>
-          </Route>
-          <Route path="/">
-            <h1>Welcome, {user.username}</h1>
+          <Route exact path="/">
+            <h1>Log Page</h1>
             <Habits user={user}/>
+          </Route>
+          <Route exact path="/log">
+            <h1>Log Route</h1>
+          </Route>
+          <Route exact path="/profile">
+            <h1>Profile Route</h1>
           </Route>
         </Switch>
       </main>

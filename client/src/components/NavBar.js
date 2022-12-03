@@ -53,7 +53,7 @@ function NavBar({ setUser }) {
           Habits
         </NavLink>
         <NavLink 
-          to="/testing"
+          to="/log"
           exact
           style={({ isActive }) => (
             isActive ? linkStylesActive : linkStyles 
@@ -62,7 +62,7 @@ function NavBar({ setUser }) {
           Daily Log
         </NavLink>
         <NavLink 
-          to="/testing"
+          to="/profile"
           exact
           style={({ isActive }) => (
             isActive ? linkStylesActive : linkStyles 
