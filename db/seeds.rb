@@ -59,5 +59,3 @@
 #     option: "Break"
 #   }
 # ])
-
-User.first.habit = Habit.first
