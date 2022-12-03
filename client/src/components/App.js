@@ -12,12 +12,15 @@ import NavBar from "./NavBar";
  *      ├─── Signup
  * ├─── Header
  * ├─── NavBar
- * ├─── User Home
- * └─── Habit
+ * ├─── Personal Habits
  *      ├─── Habit
  *      ├─── Habit
  *      └─── Habit
- * 
+ * ├─── User Log
+ *      ├─── Log Item
+ *      ├─── Log Item
+ *      └─── Log Item
+ * └─── User Profile
  */
 
 function App() {
