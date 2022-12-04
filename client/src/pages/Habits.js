@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from "react";
+import AddEditHabit from "../components/AddEditHabit";
 // import styled from "styled-components";
 
 function Habits({ user }) {
   const [habits, setHabits] = useState(user.habits)
-  // const [showAddHabit, setShowAddHabit] = useState(false)
+  const [currentHabit, setCurrentHabit] = useState(undefined)
+  const [fetchMethod, setFetchMethod] = useState("POST")
+  const [showAddHabit, setShowAddHabit] = useState(false)
 
   // useEffect(() => {
   //   fetch("/users")
@@ -16,16 +19,25 @@ function Habits({ user }) {
       <div className="habit-element-container">
         <p key={habit.id}>{habit.name}</p>
         <span>{habit.option}</span>
+        <button onClick={() => {
+          setCurrentHabit(habit)
+          setFetchMethod("PATCH")
+          setShowAddHabit(!showAddHabit)
+        }}></button>
       </div>
     )
   })
+
+  function handleAddHabit(habit) {
+    console.log(habit)
+  }
   
   return (
     <>
-      {/* {showAddHabit ?
+      {showAddHabit ?
         <AddEditHabit 
-          currentHabit={undefined} 
-          fetchMethod={"POST"} 
+          currentHabit={currentHabit} 
+          fetchMethod={fetchMethod} 
           onSubmit={handleAddHabit} 
           onCancel={() => setShowAddHabit(!showAddHabit)} 
         />
@@ -33,8 +45,12 @@ function Habits({ user }) {
         null
       }
       <div className="add-edit-button-div">
-        <button className="add-edit-button" onClick={() => setShowAddHabit(!showAddHabit)}>Add New Habit</button>
-      </div> */}
+        <button className="add-edit-button" onClick={() => {
+          setCurrentHabit(undefined)
+          setFetchMethod("POST")
+          setShowAddHabit(!showAddHabit)
+        }}>Add New Habit</button>
+      </div>
       <div className="habit-list-elements-div">
         {habitElements}
       </div>
