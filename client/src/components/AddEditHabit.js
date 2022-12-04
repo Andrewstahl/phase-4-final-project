@@ -68,15 +68,6 @@ function AddEditHabit({ currentHabit, fetchMethod, onSubmit, onCancel }) {
   return (
     <div className="add-edit-habit-container">
       <form onSubmit={handleSubmit}>
-        <label htmlFor="name">Habit</label>
-        <input
-          type="text"
-          name="name"
-          id="name"
-          value={habitData.name}
-          onChange={(e) => handleChange(e)}
-          required
-        />
         <label htmlFor="option">Option</label>
         <select 
           name="option" 
@@ -88,6 +79,15 @@ function AddEditHabit({ currentHabit, fetchMethod, onSubmit, onCancel }) {
           <option value="build">Build</option>
           <option value="break">Break</option>
         </select>
+        <label htmlFor="name">Habit</label>
+        <input
+          type="text"
+          name="name"
+          id="name"
+          value={habitData.name}
+          onChange={(e) => handleChange(e)}
+          required
+        />
         <div className="form-action-buttons">
           <input type="submit" value="Submit" />
           <button className="cancel" onClick={onCancel}>Cancel</button>
