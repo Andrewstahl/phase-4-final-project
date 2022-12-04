@@ -1,10 +1,12 @@
 import styled from "styled-components"
 
-function Error({props}) {
+function Error({ error }) {
+  
+  console.log("Error Style", error)
   return (
     <WrapperDiv>
       <Alert>!</Alert>
-      <ErrorMessage>{props}</ErrorMessage>
+      <ErrorMessage>{error}</ErrorMessage>
     </WrapperDiv>
   )
 }
