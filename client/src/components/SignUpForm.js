@@ -71,8 +71,8 @@ function SignUpForm({ onLogin }) {
         <input type="submit" value="Submit" />
       </div>
       <div>
-        {errors.map((err) => (
-          <Error key={err} props={err}>{err}</Error>
+        {errors.map((error) => (
+          <Error key={error} error={error}></Error>
         ))}
       </div>
     </form>
