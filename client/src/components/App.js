@@ -43,7 +43,7 @@ function App() {
       <main>
         <Switch>
           <Route exact path="/">
-            <h1>Log Page</h1>
+            <h1>Habit Route</h1>
             <Habits user={user}/>
           </Route>
           <Route exact path="/log">
