@@ -3,6 +3,7 @@ import { BrowserRouter, Switch, Route } from "react-router-dom";
 import Login from "../pages/Login";
 import NavBar from "./NavBar";
 import Habits from "../pages/Habits";
+import Profile from "../pages/Profile";
 
 /**
  * App Hierarchy
@@ -51,6 +52,7 @@ function App() {
           </Route>
           <Route exact path="/profile">
             <h1>Profile Route</h1>
+            <Profile user={user}/>
           </Route>
         </Switch>
       </main>
