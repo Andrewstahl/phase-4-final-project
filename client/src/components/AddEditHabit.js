@@ -1,16 +1,16 @@
 import React, { useCallback, useEffect, useState } from "react";
 import Error from "../styles/Error";
 
-function AddEditHabit({ user, currentHabit, fetchMethod, toggleDeleteButton, onSubmit, onCancel, onDelete }) {
+function AddEditHabit({ user, currentUserHabit, fetchMethod, toggleDeleteButton, onSubmit, onCancel, onDelete }) {
   // const [showDelete, setShowDelete] = useState(toggleDeleteButton)
   const [errors, setErrors] = useState([])
   const [habitData, setHabitData] = useState(() => {
-    if (currentHabit !== undefined)  {
+    if (currentUserHabit !== undefined)  {
       return ({
-        name: currentHabit.habit.name,
-        option: currentHabit.option,
-        amount: currentHabit.amount,
-        frequency: currentHabit.frequency
+        name: currentUserHabit.own_habit.name,
+        option: currentUserHabit.option,
+        amount: currentUserHabit.amount,
+        frequency: capitalizeEachWord(currentUserHabit.frequency)
       })
     } else {
       return ({
@@ -48,8 +48,10 @@ function AddEditHabit({ user, currentHabit, fetchMethod, toggleDeleteButton, onS
   function handleSubmit(e) {
     e.preventDefault()
     setErrors([])
-    
-    fetch("/habits", {
+
+    const habitUrlEnding = fetchMethod === "POST" ? "" : `${currentUserHabit.own_habit.id}`
+
+    fetch(`/habits/${habitUrlEnding}`, {
       method: fetchMethod,
       headers: {
         "CONTENT-TYPE": "application/json"
@@ -61,15 +63,9 @@ function AddEditHabit({ user, currentHabit, fetchMethod, toggleDeleteButton, onS
     .then((r) => {
       if (r.ok) {
         r.json().then((habitResponse => {
-          console.log("Habit Response", habitResponse, fetchMethod)
-          // console.log({
-          //   user_id: user.id,
-          //   habit_id: habitResponse.id,
-          //   option: capitalizeEachWord(habitData.option), 
-          //   amount: parseInt(habitData.amount),
-          //   frequency: capitalizeEachWord(habitData.frequency)
-          // })
-          fetch("/user_habits", {
+          const userHabitUrlEnding = fetchMethod === "POST" ? "" : `${currentUserHabit.id}`
+          
+          fetch(`/user_habits/${userHabitUrlEnding}`, {
             method: fetchMethod,
             headers: {"CONTENT-TYPE": "application/json"},
             body: JSON.stringify({
@@ -82,9 +78,9 @@ function AddEditHabit({ user, currentHabit, fetchMethod, toggleDeleteButton, onS
           })
           .then((r) => {
             if (r.ok) {
-              r.json().then((userHabitResponse) => console.log("New habit created", userHabitResponse))
+              r.json().then((userHabitResponse) => onSubmit(userHabitResponse))
             } else {
-              r.json().then((err) => console.error(err.errors));
+              r.json().then((err) => setErrors(err.errors));
             }
           })
         }))
@@ -92,19 +88,18 @@ function AddEditHabit({ user, currentHabit, fetchMethod, toggleDeleteButton, onS
         r.json().then((err) => setErrors(err.errors));
       }
     })
-    .then(newUserHabit => onSubmit(newUserHabit))
   }
 
   function handleDelete(e) {
     e.preventDefault()
     setErrors([])
-    fetch(`/user_habits/${currentHabit.id}`, {
+    fetch(`/user_habits/${currentUserHabit.id}`, {
       method: "DELETE",
       headers: {
         "CONTENT-TYPE": "application/json"
       }
     })
-    .then((r) => onDelete(currentHabit))
+    .then((r) => onDelete(currentUserHabit))
   }
 
   return (
@@ -121,7 +116,7 @@ function AddEditHabit({ user, currentHabit, fetchMethod, toggleDeleteButton, onS
           <option value="build">Build</option>
           <option value="break">Break</option>
         </select>
-        <label htmlFor="name">Habit</label>
+        <label htmlFor="name">Habit Name</label>
         <input
           type="text"
           name="name"
@@ -150,7 +145,7 @@ function AddEditHabit({ user, currentHabit, fetchMethod, toggleDeleteButton, onS
           onChange={(e) => handleChange(e)}
           required
         >
-          <option selected value="hour">Hour</option>
+          <option default value="hour">Hour</option>
           <option value="day">Day</option>
           <option value="week">Week</option>
           <option value="month">Month</option>
