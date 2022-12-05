@@ -2,7 +2,6 @@ import styled from "styled-components"
 
 function Error({ error }) {
   
-  console.log("Error Style", error)
   return (
     <WrapperDiv>
       <Alert>!</Alert>
