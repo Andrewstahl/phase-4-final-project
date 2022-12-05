@@ -1,19 +1,16 @@
 class UserHabitsController < ApplicationController
   rescue_from ActiveRecord::RecordInvalid, with: :render_unprocessable_entity_response
+  rescue_from ActiveRecord::RecordNotFound, with: :record_not_found
 
   # GET /user_habits
   def index
-    render json: UserHabit.all, include: {habit: { only: [:name] }} 
+    render json: UserHabit.all
   end
 
   # GET /user_habits/:user_id
   def show
-    user = User.find(session[:user_id])
-    if user
-      render json: user #, each_serializer: NestedHabitSerializer
-    else
-      render json: { error: "Unauthorized User" }, status: unauthorized
-    end
+    user_habit = UserHabit.find(params[:id])
+    render json: user_habit
   end
   
   # POST /user_habits
@@ -36,12 +33,9 @@ class UserHabitsController < ApplicationController
   
   # PATCH/PUT /user_habits/:id
   def update
-    user = User.find(session[:user_id])
-    if user
-      user_habit = UserHabit.find(params[:id])
-      user_habit.update(user_habits_params)
-      render json: user_habit
-    end
+    user_habit = UserHabit.find(params[:id])
+    user_habit.update(user_habits_params)
+    render json: user_habit
   end
 
   # DELETE /user_habits/:id
@@ -59,6 +53,10 @@ class UserHabitsController < ApplicationController
 
   def render_unprocessable_entity(invalid)
     render json: { errors: invalid.record.errors.full_messages }, status: :unprocessable_entity
+  end
+
+  def record_not_found
+    render json: { errord: ["User habit not found"] }, status: :not_found
   end
 
 end
