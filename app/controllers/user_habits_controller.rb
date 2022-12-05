@@ -1,6 +1,6 @@
 class UserHabitsController < ApplicationController
   rescue_from ActiveRecord::RecordInvalid, with: :render_unprocessable_entity_response
-  rescue_from ActiveRecord::RecordNotFound, with: :record_not_found
+  rescue_from ActiveRecord::RecordNotFound, with: :render_not_found_response
 
   # GET /user_habits
   def index
@@ -24,17 +24,17 @@ class UserHabitsController < ApplicationController
         amount: user_habits_params[:amount],
         frequency: user_habits_params[:frequency]
       })
-      render json: user_habit
+      render json: user_habit, status: :created
     else
       user_habit = UserHabit.create!(user_habits_params)
-      render json: user_habit
+      render json: user_habit, status: :created
     end
   end
   
   # PATCH/PUT /user_habits/:id
   def update
     user_habit = UserHabit.find(params[:id])
-    user_habit.update(user_habits_params)
+    user_habit.update!(user_habits_params)
     render json: user_habit
   end
 
@@ -55,8 +55,8 @@ class UserHabitsController < ApplicationController
     render json: { errors: invalid.record.errors.full_messages }, status: :unprocessable_entity
   end
 
-  def record_not_found
-    render json: { errord: ["User habit not found"] }, status: :not_found
+  def render_not_found_response
+    render json: { errors: ["User habit not found"] }, status: :not_found
   end
 
 end
