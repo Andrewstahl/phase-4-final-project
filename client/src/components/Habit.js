@@ -5,7 +5,7 @@ function Habit({ userHabit, handleClick }) {
   return (
     <>
       <div className="user-habit-element-container">
-        <p key={userHabit.id}>{userHabit.habit.name}</p>
+        <p key={userHabit.id}>{userHabit.own_habit.name}</p>
         <span>
           {userHabit.amount} x {userHabit.frequency}
         </span>
