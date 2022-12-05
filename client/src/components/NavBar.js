@@ -3,17 +3,16 @@ import { NavLink } from "react-router-dom";
 import "../assets/NavBar.css"
 
 const linkStyles = {
-  // display: "stretch",
-  // alignContent: "center",
   width: "100%",
   height: "10%",
   padding: ".5em",
-  fontSize: "20px",
+  fontSize: "25px",
   textDecoration: "none",
-  color: "rgb(84, 77, 184)",
+  color: "white",
   fontWeight: "bold",
   textAlign: "center",
-  alignItems: "center"
+  alignItems: "center",
+  verticalAlign: "center"
 };
 
 const linkStylesActive = {
@@ -24,7 +23,10 @@ const linkStylesActive = {
 const navLinkStyles = {
   display: "flex",
   borderTop: "1px solid purple",
-  borderBottom: "1px solid purple"
+  borderBottom: "1px solid purple",
+  backgroundColor: "rgb(84, 77, 184)",
+  padding: "0px 100px"
+  // color: "white"
 }
 
 function NavBar({ setUser }) {
@@ -41,7 +43,7 @@ function NavBar({ setUser }) {
   }
 
   return (
-    <div style={{ margin: "20px 400px" }}>
+    <div className="navbar-div">
       <div style={{ ...navLinkStyles }}>
         <NavLink 
           to="/"
@@ -70,8 +72,8 @@ function NavBar({ setUser }) {
         >
           Profile
         </NavLink>
-        <button onClick={handleLogoutClick}>Logout</button>
       </div>
+      <button className="logout-button" onClick={handleLogoutClick}>Logout</button>
     </div>
   )
 }
