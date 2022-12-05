@@ -1,5 +1,5 @@
 class UserHabitSerializer < ActiveModel::Serializer
-  attributes :id, :user_id, :habit_id, :option, :amount, :habit
+  attributes :id, :user_id, :habit_id, :option, :amount, :frequency, :habit
   belongs_to :habit
   belongs_to :user
   
