@@ -1,10 +1,10 @@
 class UserHabitSerializer < ActiveModel::Serializer
-  attributes :id, :user_id, :habit_id, :option, :amount, :frequency, :habit
-  belongs_to :habit
-  belongs_to :user
+  attributes :id, :user_id, :habit_id, :option, :amount, :frequency, :own_habit
+  # belongs_to :habit
+  # belongs_to :user
   
-  def habit
-    ActiveModel::SerializableResource.new(object.habit,  each_serializer: NestedHabitSerializer)
+  def own_habit
+    ActiveModel::SerializableResource.new(object.habit)
   end
 
 end
