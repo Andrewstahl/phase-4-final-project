@@ -1,4 +1,5 @@
 import React, { useCallback, useEffect, useState } from "react";
+import Error from "../styles/Error";
 
 function AddEditHabit({ currentHabit, fetchMethod, onSubmit, onCancel }) {
   const [errors, setErrors] = useState([])
@@ -33,36 +34,46 @@ function AddEditHabit({ currentHabit, fetchMethod, onSubmit, onCancel }) {
 
   function handleSubmit(e) {
     e.preventDefault()
-    console.log(habitData, fetchMethod)
-    
-    // fetch("/habits", {
-    //   method: fetchMethod,
-    //   headers: {
-    //     "CONTENT-TYPE": "application/json"
-    //   },
-    //   body: JSON.stringify({
-    //     ...habitData
-    //   })
-    // })
-    // .then((r) => {
-    //   if (r.ok) {
-    //     r.json().then((habitResponse => {
-    //       console.log(habitResponse)
-    //       // fetch("/habits", {
-    //       //   method: fetchMethod,
-    //       //   headers: {
-    //       //     "CONTENT-TYPE": "application/json"
-    //       //   },
-    //       //   body: JSON.stringify({
-    //       //     ...habitData
-    //       //   })
-    //       // })
-    //     }))
-    //   } else {
-    //     r.json().then((err) => setErrors(err.errors));
-    //   }
-    // })
-    // .then(data => onSubmit(data))
+    // console.log(habitData.name, fetchMethod)
+    // setErrors([])
+    fetch("/habits", {
+      method: fetchMethod,
+      headers: {
+        "CONTENT-TYPE": "application/json"
+      },
+      body: JSON.stringify({
+        name: habitData.name
+      })
+    })
+    .then((r) => {
+      if (r.ok) {
+        r.json().then((habitResponse => {
+          console.log("Habit Response", habitResponse, fetchMethod)
+          fetch("/user_habits", {
+            method: fetchMethod,
+            headers: {"CONTENT-TYPE": "application/json"},
+            body: JSON.stringify({
+              user_id: 1,
+              habit_id: habitResponse.id,
+              option: "Build", 
+              amount: 5,
+              frequency: "Weekly"
+              // ...habitData
+            })
+          })
+          .then((r) => {
+            if (r.ok) {
+              r.json().then((userHabitResponse) => console.log("New habit created", userHabitResponse))
+            } else {
+              r.json().then((err) => setErrors(err.errors));
+            }
+          })
+        }))
+      } else {
+        r.json().then((err) => setErrors(err.errors));
+      }
+    })
+    .then(data => onSubmit(data))
   }
 
   return (
@@ -92,6 +103,11 @@ function AddEditHabit({ currentHabit, fetchMethod, onSubmit, onCancel }) {
           <input type="submit" value="Submit" />
           <button className="cancel" onClick={onCancel}>Cancel</button>
         </div>
+        <div>
+        {errors.map((error) => (
+          <Error key={error} error={error}></Error>
+        ))}
+      </div>
       </form>
     </div>    
   )
