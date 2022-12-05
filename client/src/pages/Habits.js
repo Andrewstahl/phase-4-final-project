@@ -3,7 +3,7 @@ import AddEditHabit from "../components/AddEditHabit";
 // import styled from "styled-components";
 
 function Habits({ user }) {
-  const [habits, setHabits] = useState(user.habits)
+  const [userHabits, setUserHabits] = useState(user.user_habits)
   const [currentHabit, setCurrentHabit] = useState(undefined)
   const [fetchMethod, setFetchMethod] = useState("POST")
   const [showAddHabit, setShowAddHabit] = useState(false)
@@ -14,13 +14,13 @@ function Habits({ user }) {
   //     .then(user => setHabits(user.habits))
   // }, [])
 
-  const habitElements = habits.map(habit => {
+  const habitElements = userHabits.map(userHabit => {
     return (
-      <div className="habit-element-container">
-        <p key={habit.id}>{habit.name}</p>
-        <span>{habit.option}</span>
+      <div className="user-habit-element-container">
+        <p key={userHabit.id}>{userHabit.habit.name}</p>
+        <span>{userHabit.option}</span>
         <button onClick={() => {
-          setCurrentHabit(habit)
+          setCurrentHabit(userHabit.habit)
           setFetchMethod("PATCH")
           setShowAddHabit(!showAddHabit)
         }}></button>
@@ -29,7 +29,7 @@ function Habits({ user }) {
   })
 
   function handleAddHabit(habit) {
-    console.log(habit)
+    // console.log(habit)
   }
   
   return (
