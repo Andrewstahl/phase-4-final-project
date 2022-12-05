@@ -17,7 +17,7 @@ class UsersController < ApplicationController
   # GET /me
   def show
     @user = User.find(session[:user_id])
-    render json: @user, include: :habits
+    render json: @user, includes: :user_habits
   end
   
   # PATCH/PUT /me
