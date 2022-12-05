@@ -27,10 +27,10 @@ class UserHabitsController < ApplicationController
         amount: user_habits_params[:amount],
         frequency: user_habits_params[:frequency]
       })
-      render json: user_habit, include: {habit: { only: [:name] }}
+      render json: user_habit
     else
       user_habit = UserHabit.create!(user_habits_params)
-      render json: user_habit, include: habits
+      render json: user_habit
     end
   end
   
