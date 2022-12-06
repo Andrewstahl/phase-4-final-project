@@ -20,7 +20,7 @@ class LogsController < ApplicationController
     if user
       @log = Log.create!({
         user_id: user.id,
-        habit_id: log_params[:habit_id],
+        habit: Habit.find_by(name: log_params[:habit]),
         amount: log_params[:amount],
         date: log_params[:date],
         description: log_params[:description]
@@ -49,7 +49,7 @@ class LogsController < ApplicationController
   private
 
   def log_params
-    params.permit(:user_id, :habit_id, :amount, :date, :description)
+    params.permit(:user_id, :habit_id, :amount, :date, :description, :habit)
   end
 
   def render_unprocessable_entity_response(invalid)
