@@ -1,24 +1,38 @@
 import React, { useState } from "react";
 import Error from "../styles/Error";
-import { useHistory } from "react-router-dom";
 import toast, { Toaster } from "react-hot-toast"
+import Login from "./Login";
 
 function Profile({ user }) {
-  const [showUsernameForm, setShowUsernameForm] = useState(false)
-  const [showPasswordForm, setShowPasswordForm] = useState(false)
-  const [showDeleteForm, setShowDeleteForm] = useState(false)
   const [username, setUsername] = useState(user.username)
   const [password, setPassword] = useState("")
   const [passwordConfirmation, setPasswordConfirmation] = useState("")
   const [deleteConfirmation, setDeleteConfirmation] = useState("")
   const [errors, setErrors] = useState([])
 
-  const history = useHistory()
-
   const successNotify = () => toast.success("Account Updated")
   const failureNotify = () => toast.error("Account Not Updated (see errors)")
 
-  function handleSubmit(e) {
+  function handleUsernameSubmit(e) {
+    e.preventDefault()
+    
+    fetch("/me", {
+      method: "PATCH",
+      headers: {
+        "CONTENT-TYPE": "application/json"
+      },
+      body: JSON.stringify({username})
+    }).then((r) => {
+      if (r.ok) {
+        successNotify("Username has been updated")
+        setUsername("")
+      } else {
+        r.json().then((err) => setErrors(err.errors))
+      } 
+    })
+  }
+
+  function handlePasswordSubmit(e) {
     e.preventDefault()
     setErrors([])
     fetch("/me", {
@@ -32,107 +46,91 @@ function Profile({ user }) {
       })
     }).then((r) => {
       if (r.ok) {
-        successNotify()
-        // history.push("/profile")
+        successNotify("Password has been updated!")
+        setPassword("")
+        setPasswordConfirmation("")
       } else {
-        failureNotify()
+        failureNotify("Password has not been update")
         r.json().then((err) => setErrors(err.errors))
       } 
     })
   }
-  // function handleSubmit(e) {
-  //   e.preventDefault()
-    
-  //   fetch("/me", {
-  //     method: "PATCH",
-  //     headers: {
-  //       "CONTENT-TYPE": "application/json"
-  //     },
-  //     body: JSON.stringify({username})
-  //   }).then((r) => {
-  //     if (r.ok) {
-  //       history.push("/profile")
-  //     } else {
-  //       r.json().then((err) => setErrors(err.errors))
-  //     } 
-  //   })
-  // }
 
-  function hideAllForms() {
-    setShowUsernameForm(false)
-    setShowPasswordForm(false)
-    setShowDeleteForm(false)
+  function handleDeleteSubmit(e) {
+    e.preventDefault()
     setErrors([])
+    if (deleteConfirmation.toLowerCase() !== "delete") {
+      failureNotify("Please enter the word 'Delete' into the delete box and try again")
+    } else {
+      fetch("/me", {
+        method: "DELETE",
+        headers: {
+          "CONTENT-TYPE": "application/json"
+        }
+      }).then((r) => {
+        if (r.ok) {
+          successNotify("Account has been deleted!")
+          fetch("/logout", {
+            method: "DELETE",
+            headers: {
+              "CONTENT-TYPE": "application/json"
+            }
+          }).then((r) => <Login />)
+        } else {
+          failureNotify()
+          r.json().then((err) => setErrors(err.errors))
+        } 
+      })
+    }
   }
-
+  
   return (
     <>
       <Toaster />
-      <div className="profile-settings-container">
-        <button onClick={() => {
-          hideAllForms()
-          setShowUsernameForm(!showUsernameForm)
-          setUsername(user.username)
-        }}>Update Username</button>
-        {showUsernameForm ? (
-          <form onSubmit={handleSubmit}>
-            <input 
-              placeholder="Enter Username"
-              name="username"
-              id="username"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)} 
-            />
-            <input type="submit" value="Submit" />
-          </form>
-        ) : null
-        }
-        <button onClick={() => {
-          hideAllForms()
-          setShowPasswordForm(!showPasswordForm)
-        }}>Update Password</button>
-        {showPasswordForm ? (
-          <form onSubmit={handleSubmit}>
-            <input 
-              placeholder="Enter Password"
-              name="password"
-              id="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)} 
-            />
-            <input 
-              placeholder="Confirm Password"
-              name="passwordConfirmation"
-              id="passwordConfirmation"
-              value={passwordConfirmation}
-              onChange={(e) => setPasswordConfirmation(e.target.value)} 
-            />
-            <input type="submit" value="Submit" />
-          </form>
-        ) : null
-        }
-        <button onClick={() => {
-          hideAllForms()
-          setShowDeleteForm(!showDeleteForm)
-        }}>Delete Account</button>
-        {showDeleteForm ? (
-          <>
-            <h2>Are You Sure? This Cannot Be Undone</h2>
-            <form onSubmit={handleSubmit}>
-              <label htmlFor="deleteConfirmation">Type in "Delete" in the field below and press submit</label>
-              <input 
-                placeholder="Enter 'Delete' below to delete account"
-                name="deleteConfirmation"
-                id="deleteConfirmation"
-                value={deleteConfirmation}
-                onChange={(e) => setDeleteConfirmation(e.target.value)} 
-              />
-              <input type="submit" value="Submit" />
-            </form>
-          </>
-        ) : null
-        }
-        {/* {errors.map((err) => console.log(err))} */}
+      <div className="profile-change-container">
+        <form className="profile-change-username" onSubmit={handleUsernameSubmit}>
+          <label htmlFor="username">Enter New Username</label>
+          <input 
+            type="text"
+            placeholder="Enter Username"
+            name="username"
+            id="username"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)} 
+          />
+          <input type="submit" value="Change Username" />
+        </form>
+        <form className="profile-change-password" onSubmit={handlePasswordSubmit}>
+          <input 
+            type="password"
+            placeholder="Enter Password"
+            name="password"
+            id="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)} 
+          />
+          <input 
+            type="password"
+            placeholder="Confirm Password"
+            name="passwordConfirmation"
+            id="passwordConfirmation"
+            value={passwordConfirmation}
+            onChange={(e) => setPasswordConfirmation(e.target.value)} 
+          />
+          <input type="submit" value="Change Password" />
+        </form>
+        <form className="profile-change-delete" onSubmit={handleDeleteSubmit}>
+          <label htmlFor="deleteConfirmation">Type in "Delete" in the field below and press submit</label>
+          <input 
+            type="text"
+            placeholder="Enter 'Delete' below to delete account"
+            name="deleteConfirmation"
+            id="deleteConfirmation"
+            value={deleteConfirmation}
+            onChange={(e) => setDeleteConfirmation(e.target.value)} 
+          />
+          <input className="delete-account" type="submit" value="Delete Account" />
+        </form>
         {errors.map((error) => (
           <Error key={error} error={error}></Error>
         ))}
