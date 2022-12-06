@@ -5,4 +5,7 @@ class Log < ApplicationRecord
   validates :amount, presence: true
   validates :date, presence: true
   validates :description, presence: true
+
+  accepts_nested_attributes_for :habit
+  
 end
