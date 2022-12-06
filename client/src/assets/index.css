@@ -39,7 +39,7 @@ form {
   background-color: rgb(249, 246, 246);
 }
 
-input[type=text], [type=password], [type=number], select {
+input[type=text], [type=password], [type=number], select, [type=date], [type=datetime-local], textarea {
   width: 100%;
   padding: 12px 20px;
   margin: 8px 0;
@@ -47,6 +47,10 @@ input[type=text], [type=password], [type=number], select {
   border: 1px solid #ccc;
   border-radius: 4px;
   box-sizing: border-box;
+}
+
+textarea {
+  resize: vertical;
 }
 
 input[type=submit], button.login__signup__switch__button {
@@ -82,7 +86,7 @@ button.cancel, button.delete {
   cursor: pointer;
 }
 
-button.delete {
+button.delete, input.delete-account {
   background-color: var(--label-red);
 }
 
@@ -101,7 +105,7 @@ button.add-edit-button {
 }
 
 /* Habits */
-div.habit-list-elements-div {
+div.habit-list-elements-div, div.log-list-elements-div {
   background-color: white;
   /* margin: 20px 50px; */
   max-width: 60%;
@@ -112,6 +116,7 @@ div.habit-list-elements-div {
   text-align: center;
   margin: auto;
   border: 10px;
+  /* border-radius: 25%; */
 }
 
 form.add-edit-habit-form {
@@ -124,6 +129,7 @@ div.user-habit-element-container {
   border-width: 1px;
   border-style: solid;
   padding: 10px;
+  /* border-radius: 25px; */
 }
 
 div.user-habit-element-container > p {
@@ -147,4 +153,14 @@ button.user-habit-edit-button {
   background-color: var(--label-purple);
   color:white;
   font-weight: bold
+}
+
+/* Profile */
+div.profile-change-container {
+  margin: 100px;
+  /* background-color: var(--label-grey); */
+}
+
+form + form {
+  margin-top: 20px;
 }
