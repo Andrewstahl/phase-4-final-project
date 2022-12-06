@@ -4,6 +4,7 @@ import Login from "../pages/Login";
 import NavBar from "./NavBar";
 import Habits from "../pages/Habits";
 import Profile from "../pages/Profile";
+import Log from "../pages/Log";
 
 /**
  * App Hierarchy
@@ -44,14 +45,12 @@ function App() {
       <main>
         <Switch>
           <Route exact path="/">
-            <h1>Habit Route</h1>
             <Habits user={user}/>
           </Route>
           <Route exact path="/log">
-            <h1>Log Route</h1>
+            <Log user={user} />
           </Route>
           <Route exact path="/profile">
-            <h1>Profile Route</h1>
             <Profile user={user}/>
           </Route>
         </Switch>
