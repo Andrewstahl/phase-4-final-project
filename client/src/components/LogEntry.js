@@ -1,7 +1,6 @@
 import React from "react";
 
-function LogEntry({ log, handleClick }) {
-
+export default function LogEntry({ log, handleClick }) {
   return (
     <>
       <div className="log-element-container">
@@ -13,7 +12,4 @@ function LogEntry({ log, handleClick }) {
       </div>
     </>
   )
-
 }
-
-export default LogEntry;
