@@ -19,7 +19,7 @@ class UserHabitsController < ApplicationController
     if user
       user_habit = UserHabit.create!({
         user_id: user.id,
-        habit_id: user_habits_params[:habit_id],
+        habit: Habit.find_or_create_by(name: user_habits_params[:habit]),
         option: user_habits_params[:option],
         amount: user_habits_params[:amount],
         frequency: user_habits_params[:frequency]
@@ -48,7 +48,7 @@ class UserHabitsController < ApplicationController
   private
 
   def user_habits_params
-    params.permit(:user_id, :habit_id, :option, :amount, :frequency)
+    params.permit(:user_id, :habit_id, :option, :amount, :frequency, :habit)
   end
 
   def render_unprocessable_entity(invalid)
