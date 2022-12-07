@@ -11,12 +11,14 @@ export default function LogForm({
   onChange,
   onSubmit,
   onCancel,
-  onDelete
+  onDelete,
 }) {
-
-  const habitOptions = user.user_habits.map(user_habit => {
-    return <option key={user_habit.own_habit.id}>{user_habit.own_habit.name}</option>
-  })
+  
+  const habitOptions = user.user_habits.map((user_habit) => {
+    return (
+      <option key={user_habit.own_habit.id}>{user_habit.own_habit.name}</option>
+    );
+  });
 
   return (
     <div className="add-edit-log-container">
@@ -30,7 +32,9 @@ export default function LogForm({
           onChange={(e) => onChange(e)}
           required
         >
-          <option default disabled>Select a Habit</option>
+          <option default disabled>
+            Select a Habit
+          </option>
           {habitOptions}
         </select>
         <label htmlFor="amount">Amount</label>
@@ -45,24 +49,34 @@ export default function LogForm({
           required
         />
         <label htmlFor="date">Date</label>
-        <input 
-          id="date" 
-          type="datetime-local" 
-          name="date" 
-          placeholder="Enter Date Here" 
+        <input
+          id="date"
+          type="datetime-local"
+          name="date"
+          placeholder="Enter Date Here"
           value={logData.date}
           onChange={(e) => onChange(e)}
         />
         <label htmlFor="description">Add a Note</label>
-        <textarea id="description" name="description" value={textarea} rows="3" onChange={(e) => onChange(e)}/>
-        
-        <FormActionButtons currentElement={currentLog} onDelete={onDelete} onCancel={onCancel} />
+        <textarea
+          id="description"
+          name="description"
+          value={textarea}
+          rows="3"
+          onChange={(e) => onChange(e)}
+        />
+
+        <FormActionButtons
+          currentElement={currentLog}
+          onDelete={onDelete}
+          onCancel={onCancel}
+        />
         <div>
-        {errors.map((error) => (
-          <Error key={error} error={error}></Error>
-        ))}
-      </div>
+          {errors.map((error) => (
+            <Error key={error} error={error}></Error>
+          ))}
+        </div>
       </form>
     </div>
-  )
+  );
 }
