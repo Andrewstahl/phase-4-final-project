@@ -29,7 +29,7 @@ class UsersController < ApplicationController
 
   # DELETE /me
   def destroy
-    @user = current_user
+    @user = User.find(session[:user_id])
     @user.destroy
     head :no_content
   end
@@ -40,9 +40,9 @@ class UsersController < ApplicationController
     params.permit(:username, :password, :password_confirmation)
   end
   
-  def current_user
-    @user = User.find(session[:user_id])
-  end
+  # def current_user
+  #   @user = User.find(session[:user_id])
+  # end
   
   def render_unprocessable_entity_response(invalid)
     render json: { errors: invalid.record.errors.full_messages }, status: :unprocessable_entity
