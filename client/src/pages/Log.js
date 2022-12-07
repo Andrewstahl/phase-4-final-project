@@ -3,74 +3,78 @@ import AddEditLog from "../components/AddEditLog";
 import LogEntry from "../components/LogEntry";
 
 function Log({ user }) {
-  const [logs, setLogs] = useState(user.logs)
-  const [currentLog, setCurrentLog] = useState(undefined)
-  const [fetchMethod, setFetchMethod] = useState("POST")
-  const [showAddLog, setShowAddLog] = useState(false)
-  const [showDelete, setShowDelete] = useState(false)
+  const [logs, setLogs] = useState(user.logs);
+  const [currentLog, setCurrentLog] = useState(undefined);
+  const [fetchMethod, setFetchMethod] = useState("POST");
+  const [showAddLog, setShowAddLog] = useState(false);
+  const [showDelete, setShowDelete] = useState(false);
 
-  const logElements = logs.map(log => {
-    return <LogEntry key={log.id} log={log} handleClick={() => {
-      setCurrentLog(log)
-      setFetchMethod("PATCH")
-      setShowAddLog(!showAddLog)
-      setShowDelete(true)
-    }}/>
-  })
+  const logElements = logs.map((log) => {
+    return (
+      <LogEntry
+        key={log.id}
+        log={log}
+        handleClick={() => {
+          setCurrentLog(log);
+          setFetchMethod("PATCH");
+          setShowAddLog(!showAddLog);
+          setShowDelete(true);
+        }}
+      />
+    );
+  });
 
   function handleAddLog(newLog) {
-    setShowAddLog(false)
+    setShowAddLog(false);
     if (fetchMethod === "POST") {
-      setLogs([...logs, newLog])
+      setLogs([...logs, newLog]);
     } else {
-      const updatedLogs = logs.map(log => {
+      const updatedLogs = logs.map((log) => {
         if (log.id === newLog.id) {
-          return newLog
+          return newLog;
         } else {
-          return log
+          return log;
         }
-      })
-      setLogs(updatedLogs)
+      });
+      setLogs(updatedLogs);
     }
   }
 
   function handleDelete(deletedLog) {
-    setShowAddLog(false)
-    const updatedUserHabits = logs.filter(log => log.id !== deletedLog.id)
-    setLogs(updatedUserHabits)
+    setShowAddLog(false);
+    const updatedUserHabits = logs.filter((log) => log.id !== deletedLog.id);
+    setLogs(updatedUserHabits);
   }
-  
+
   return (
     <>
       <div className="add-edit-button-div">
-        <button className="add-edit-button" onClick={() => {
-          setCurrentLog(undefined)
-          setFetchMethod("POST")
-          setShowAddLog(!showAddLog)
-          setShowDelete(false)
-        }}
+        <button
+          className="add-edit-button"
+          onClick={() => {
+            setCurrentLog(undefined);
+            setFetchMethod("POST");
+            setShowAddLog(!showAddLog);
+            setShowDelete(false);
+          }}
         >
           Add New Log Entry
         </button>
       </div>
-      {showAddLog ?
-        <AddEditLog 
-          user={user}  
+      {showAddLog ? (
+        <AddEditLog
+          user={user}
           currentLog={currentLog}
-          fetchMethod={fetchMethod} 
+          fetchMethod={fetchMethod}
           toggleDeleteButton={showDelete}
-          onSubmit={handleAddLog} 
+          onSubmit={handleAddLog}
           onCancel={() => setShowAddLog(!showAddLog)}
           onDelete={handleDelete}
         />
-        :
-        null
-      }
-      <div className="log-list-elements-div">
-        {logElements}
-      </div>
+      ) : null}
+      <div className="log-list-elements-div">{logElements}</div>
     </>
-  )
+  );
 }
 
 export default Log;
