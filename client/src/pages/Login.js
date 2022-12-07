@@ -6,7 +6,6 @@ import LoginForm from "../components/LoginForm";
 
 function Login({ onLogin }) {
   const [showLogin, setShowLogin] = useState(true)
-
   return (
     <>
       {showLogin ? (
@@ -40,7 +39,6 @@ function Login({ onLogin }) {
       )}
     </>
   )
-
 }
 
 const Divider = styled.hr`
