@@ -8,14 +8,12 @@ function AddEditLog({ user, currentLog, fetchMethod, toggleDeleteButton, onSubmi
     if (currentLog !== undefined)  {
       return ({
         name: currentLog.own_habit.name,
-        // date: currentLog.date.split("T")[0],
         date: moment(currentLog.date).format("YYYY-MM-DD hh:mm"),
         amount: currentLog.amount,
       })
     } else {
       return ({
         name: "",
-        // date: (new Date()).toISOString().slice(0, (new Date()).toISOString().lastIndexOf(":")).replace("T", " "),
         date: moment().format("YYYY-MM-DD hh:mm"),
         amount: 0,
       })
