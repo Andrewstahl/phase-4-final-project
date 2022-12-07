@@ -1,86 +1,89 @@
-import React, { useEffect, useState } from "react";
-import Error from "../styles/Error";
-import FormActionButtons from "./FormActionButtons";
+import React, { useState } from "react";
 import LogForm from "./LogForm";
-import moment from "moment"
+import moment from "moment";
 
-export default function AddEditLog({ user, currentLog, fetchMethod, onSubmit, onCancel, onDelete }) {
-  const [errors, setErrors] = useState([])
+export default function AddEditLog({
+  user,
+  currentLog,
+  fetchMethod,
+  onSubmit,
+  onCancel,
+  onDelete,
+}) {
+  const [errors, setErrors] = useState([]);
   const [logData, setLogData] = useState(() => {
-    if (currentLog !== undefined)  {
-      return ({
+    if (currentLog !== undefined) {
+      return {
         name: currentLog.own_habit.name,
         date: moment(currentLog.date).format("YYYY-MM-DD hh:mm"),
         amount: currentLog.amount,
-      })
+      };
     } else {
-      return ({
+      return {
         name: "",
         date: moment().format("YYYY-MM-DD hh:mm"),
         amount: 0,
-      })
+      };
     }
-  })
+  });
   const [textarea, setTextArea] = useState(() => {
-    return currentLog !== undefined ? currentLog.description : ""
-  })
+    return currentLog !== undefined ? currentLog.description : "";
+  });
 
   function handleChange(e) {
-    e.preventDefault()
+    e.preventDefault();
     const name = e.target.name;
     const value = e.target.value;
     if (name === "description") {
-      setTextArea(value)
+      setTextArea(value);
     } else {
       setLogData({
         ...logData,
-        [name]: value
-      })
+        [name]: value,
+      });
     }
   }
 
   function handleSubmit(e) {
-    e.preventDefault()
-    setErrors([])
+    e.preventDefault();
+    setErrors([]);
 
-    const logUrlEnding = fetchMethod === "POST" ? "" : `${currentLog.id}`
+    const logUrlEnding = fetchMethod === "POST" ? "" : `${currentLog.id}`;
 
     fetch(`/logs/${logUrlEnding}`, {
       method: fetchMethod,
       headers: {
-        "CONTENT-TYPE": "application/json"
+        "CONTENT-TYPE": "application/json",
       },
       body: JSON.stringify({
         user_id: user.id,
         habit: logData.name,
         date: logData.date,
         amount: logData.amount,
-        description: textarea
-      })
-    })
-    .then((r) => {
+        description: textarea,
+      }),
+    }).then((r) => {
       if (r.ok) {
-        r.json().then((logResponse) => onSubmit(logResponse))
+        r.json().then((logResponse) => onSubmit(logResponse));
       } else {
-        r.json().then((err) => setErrors(err.errors))
+        r.json().then((err) => setErrors(err.errors));
       }
-    })
-  }  
+    });
+  }
 
   function handleDelete(e) {
-    e.preventDefault()
-    setErrors([])
+    e.preventDefault();
+    setErrors([]);
     fetch(`/logs/${currentLog.id}`, {
       method: "DELETE",
       headers: {
-        "CONTENT-TYPE": "application/json"
-      }
-    })
-    .then((r) => onDelete(currentLog))
+        "CONTENT-TYPE": "application/json",
+      },
+    }).then((r) => onDelete(currentLog));
   }
 
   return (
-    <LogForm 
+    <LogForm
       user={user}
       logData={logData}
       currentLog={currentLog}
@@ -90,5 +93,5 @@ export default function AddEditLog({ user, currentLog, fetchMethod, onSubmit, on
       onCancel={onCancel}
       onDelete={handleDelete}
     />
-  )
+  );
 }
