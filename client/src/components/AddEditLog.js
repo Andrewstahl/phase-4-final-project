@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from "react";
 import Error from "../styles/Error";
+import FormActionButtons from "./FormActionButtons";
+import LogForm from "./LogForm";
 import moment from "moment"
 
-function AddEditLog({ user, currentLog, fetchMethod, toggleDeleteButton, onSubmit, onCancel, onDelete }) {
+export default function AddEditLog({ user, currentLog, fetchMethod, onSubmit, onCancel, onDelete }) {
   const [errors, setErrors] = useState([])
   const [logData, setLogData] = useState(() => {
     if (currentLog !== undefined)  {
@@ -23,16 +25,7 @@ function AddEditLog({ user, currentLog, fetchMethod, toggleDeleteButton, onSubmi
     return currentLog !== undefined ? currentLog.description : ""
   })
 
-  const habitOptions = user.user_habits.map(user_habit => {
-    return <option key={user_habit.own_habit.id}>{user_habit.own_habit.name}</option>
-  })
-
-  useEffect(() => {
-    window.scrollTo(0, 0)
-  }, [])
-
   function handleChange(e) {
-    console.log(e.target.value)
     e.preventDefault()
     const name = e.target.name;
     const value = e.target.value;
@@ -87,58 +80,15 @@ function AddEditLog({ user, currentLog, fetchMethod, toggleDeleteButton, onSubmi
   }
 
   return (
-    <div className="add-edit-log-container">
-      <form className="add-edit-log-form" onSubmit={handleSubmit}>
-        <label htmlFor="name">Habit Name</label>
-        <select
-          name="name"
-          id="name"
-          placeholder="Enter Habit Here"
-          value={logData.name}
-          onChange={(e) => handleChange(e)}
-          required
-        >
-          {habitOptions}
-        </select>
-        <label htmlFor="amount">Amount</label>
-        <input
-          type="number"
-          minimum="0"
-          name="amount"
-          id="amount"
-          placeholder="Enter Amount Here"
-          value={logData.amount}
-          onChange={(e) => handleChange(e)}
-          required
-        />
-        <label htmlFor="date">Date</label>
-        <input 
-          id="date" 
-          type="datetime-local" 
-          name="date" 
-          placeholder="Enter Date Here" 
-          value={logData.date}
-          onChange={(e) => handleChange(e)}
-        />
-        <label htmlFor="description">Add a Note</label>
-        <textarea id="description" name="description" value={textarea} rows="3" onChange={(e) => handleChange(e)}/>
-        
-        <div className="form-action-buttons">
-          <input type="submit" value="Submit" />
-          {toggleDeleteButton ? (
-            <button className="delete" onClick={(e) => handleDelete(e)}>Delete</button>
-          ) : null
-          }
-          <button className="cancel" onClick={onCancel}>Cancel</button>
-        </div>
-        <div>
-        {errors.map((error) => (
-          <Error key={error} error={error}></Error>
-        ))}
-      </div>
-      </form>
-    </div>    
+    <LogForm 
+      user={user}
+      logData={logData}
+      currentLog={currentLog}
+      errors={errors}
+      onChange={handleChange}
+      onSubmit={handleSubmit}
+      onCancel={onCancel}
+      onDelete={handleDelete}
+    />
   )
 }
-
-export default AddEditLog
