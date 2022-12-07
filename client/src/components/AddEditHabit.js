@@ -2,7 +2,6 @@ import React, { useCallback, useEffect, useState } from "react";
 import Error from "../styles/Error";
 
 function AddEditHabit({ user, currentUserHabit, fetchMethod, toggleDeleteButton, onSubmit, onCancel, onDelete }) {
-  // const [showDelete, setShowDelete] = useState(toggleDeleteButton)
   const [errors, setErrors] = useState([])
   const [habitData, setHabitData] = useState(() => {
     if (currentUserHabit !== undefined)  {
