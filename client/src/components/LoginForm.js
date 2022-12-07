@@ -28,41 +28,43 @@ function LoginForm({ onLogin }) {
   }
 
   return (
-    <form onSubmit={(e) => handleSubmit(e)}>
+    <>
       <div>
-        <h1>Login Now</h1>
+        <h1 className="login-page-header">Login Now</h1>
       </div>
-      <div>
-        <label htmlFor="username">Username</label>
-        <input
-          type="text"
-          id="username"
-          name="username"
-          autoComplete="off"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
-        />
-      </div>
-      <div>
-        <label htmlFor="password">Password</label>
-        <input
-          type="password"
-          id="password"
-          name="password"
-          autoComplete="off"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
-      </div>
-      <div className="form__submit__div">
-        <input type="submit" value="Submit" />
-      </div>
-      <div>
-        {errors.map((error) => (
-          <Error key={error} error={error}></Error>
-        ))}
-      </div>
-    </form>
+      <form onSubmit={(e) => handleSubmit(e)}>
+        <div>
+          <label htmlFor="username">Username</label>
+          <input
+            type="text"
+            id="username"
+            name="username"
+            autoComplete="off"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+          />
+        </div>
+        <div>
+          <label htmlFor="password">Password</label>
+          <input
+            type="password"
+            id="password"
+            name="password"
+            autoComplete="off"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+        </div>
+        <div className="form__submit__div">
+          <input type="submit" value="Submit" />
+        </div>
+        <div>
+          {errors.map((error) => (
+            <Error key={error} error={error}></Error>
+          ))}
+        </div>
+      </form>
+    </>
   )
 }
 

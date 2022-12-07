@@ -30,52 +30,54 @@ function SignUpForm({ onLogin }) {
   }
 
   return (
-    <form onSubmit={(e) => handleSubmit(e)}>
+    <>
       <div>
-        <h1>Sign Up Now</h1>
+        <h1 className="login-page-header">Sign Up Now</h1>
       </div>
-      <div>
-        <label htmlFor="username">Username</label>
-        <input
-          type="text"
-          id="username"
-          name="username"
-          autoComplete="off"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
-        />
-      </div>
-      <div>
-        <label htmlFor="password">Password</label>
-        <input
-          type="password"
-          id="password"
-          name="password"
-          autoComplete="off"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
-      </div>
-      <div>
-        <label htmlFor="password-confirmation">Password Confirmation</label>
-        <input
-          type="password"
-          id="password-confirmation"
-          name="password-confirmation"
-          autoComplete="off"
-          value={passwordConfirmation}
-          onChange={(e) => setPasswordConfirmation(e.target.value)}
-        />
-      </div>
-      <div>
-        <input type="submit" value="Submit" />
-      </div>
-      <div>
-        {errors.map((error) => (
-          <Error key={error} error={error}></Error>
-        ))}
-      </div>
-    </form>
+      <form onSubmit={(e) => handleSubmit(e)}>
+        <div>
+          <label htmlFor="username">Username</label>
+          <input
+            type="text"
+            id="username"
+            name="username"
+            autoComplete="off"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+          />
+        </div>
+        <div>
+          <label htmlFor="password">Password</label>
+          <input
+            type="password"
+            id="password"
+            name="password"
+            autoComplete="off"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+        </div>
+        <div>
+          <label htmlFor="password-confirmation">Password Confirmation</label>
+          <input
+            type="password"
+            id="password-confirmation"
+            name="password-confirmation"
+            autoComplete="off"
+            value={passwordConfirmation}
+            onChange={(e) => setPasswordConfirmation(e.target.value)}
+          />
+        </div>
+        <div>
+          <input type="submit" value="Submit" />
+        </div>
+        <div>
+          {errors.map((error) => (
+            <Error key={error} error={error}></Error>
+          ))}
+        </div>
+      </form>
+    </>
   )
 }
 
