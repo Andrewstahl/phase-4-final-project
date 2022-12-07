@@ -8,8 +8,8 @@
 
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -17,7 +17,7 @@ body {
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
 
@@ -38,12 +38,19 @@ form {
   box-shadow: 5px 10px 20px 0px rgba(0, 0, 0, 0.19);
 }
 
-form, div.login__signup__switch__container {
+form,
+div.login__signup__switch__container {
   max-width: 60%;
-  margin: auto
+  margin: auto;
 }
 
-input[type=text], [type=password], [type=number], select, [type=date], [type=datetime-local], textarea {
+input[type="text"],
+[type="password"],
+[type="number"],
+select,
+[type="date"],
+[type="datetime-local"],
+textarea {
   width: 100%;
   padding: 12px 20px;
   margin: 8px 0;
@@ -57,7 +64,8 @@ textarea {
   resize: vertical;
 }
 
-input[type=submit], button.login__signup__switch__button {
+input[type="submit"],
+button.login__signup__switch__button {
   width: 100%;
   background-color: var(--label-purple);
   color: white;
@@ -71,13 +79,13 @@ input[type=submit], button.login__signup__switch__button {
 }
 
 div.form-action-buttons {
-  /* margin: 0px 5px */
   margin: auto;
   display: inline-flex;
   width: 100%;
 }
 
-button.cancel, button.delete {
+button.cancel,
+button.delete {
   width: 100%;
   background-color: var(--label-grey);
   color: white;
@@ -90,7 +98,8 @@ button.cancel, button.delete {
   cursor: pointer;
 }
 
-button.delete, input.delete-account {
+button.delete,
+input.delete-account {
   background-color: var(--label-red);
 }
 
@@ -104,28 +113,21 @@ button.add-edit-button {
   height: 50px;
   font-size: large;
   background-color: var(--label-purple);
-  color:white;
-  font-weight: bold
+  color: white;
+  font-weight: bold;
 }
 
-/* Habits */
-div.habit-list-elements-div, div.log-list-elements-div {
+div.habit-list-elements-div,
+div.log-list-elements-div {
   max-width: 60%;
   text-align: center;
   margin: auto;
   border: 10px;
 }
 
-/* div.user-habit-element-container > p {
-  font-size: large;
-  font-weight: bold;
-  margin-bottom: 0px
-} */
-
 /* Profile */
 div.profile-change-container {
   margin: 100px;
-  /* background-color: var(--label-grey); */
 }
 
 form + form {

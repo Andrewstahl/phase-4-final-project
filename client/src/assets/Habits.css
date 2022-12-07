@@ -1,5 +1,5 @@
 h2 {
-  margin: 0px
+  margin: 0px;
 }
 
 p {
@@ -14,12 +14,12 @@ div.user-habit-element-container {
   margin: auto;
   background-color: white;
   margin-top: 20px;
-  padding: 20px
+  padding: 20px;
 }
 
 button.user-habit-edit-button {
   background-color: var(--label-purple);
-  color:white;
+  color: white;
   font-weight: bold;
   font-size: large;
 }
