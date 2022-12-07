@@ -8,7 +8,7 @@ import Log from "../pages/Log";
 
 /**
  * App Hierarchy
- * 
+ *
  * App
  * ├─── Login Page
  *      ├─── Login
@@ -24,6 +24,7 @@ import Log from "../pages/Log";
  *      ├─── Log Item
  *      └─── Log Item
  * └─── User Profile
+ *      └─── Profile Settings
  */
 
 function App() {
@@ -32,9 +33,9 @@ function App() {
   useEffect(() => {
     fetch("/me").then((r) => {
       if (r.ok) {
-        r.json().then((user) => setUser(user))
+        r.json().then((user) => setUser(user));
       }
-    })
+    });
   }, []);
 
   if (!user) return <Login onLogin={setUser} />;
@@ -45,13 +46,13 @@ function App() {
       <main>
         <Switch>
           <Route exact path="/">
-            <Habits user={user}/>
+            <Habits user={user} />
           </Route>
           <Route exact path="/log">
             <Log user={user} />
           </Route>
           <Route exact path="/profile">
-            <Profile user={user} setUser={setUser}/>
+            <Profile user={user} setUser={setUser} />
           </Route>
         </Switch>
       </main>
