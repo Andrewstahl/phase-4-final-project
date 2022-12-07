@@ -1,78 +1,77 @@
 import React, { useState } from "react";
 import AddEditHabit from "../components/AddEditHabit";
-// import styled from "styled-components";
-import "../assets/index.css"
 import Habit from "../components/Habit";
+import "../assets/Habits.css";
 
-function Habits({ user }) {
-  const [userHabits, setUserHabits] = useState(user.user_habits)
-  const [currentUserHabit, setCurrentUserHabit] = useState(undefined)
-  const [fetchMethod, setFetchMethod] = useState("POST")
-  const [showAddHabit, setShowAddHabit] = useState(false)
-  const [showDelete, setShowDelete] = useState(false)
+export default function Habits({ user }) {
+  const [userHabits, setUserHabits] = useState(user.user_habits);
+  const [currentUserHabit, setCurrentUserHabit] = useState(undefined);
+  const [fetchMethod, setFetchMethod] = useState("POST");
+  const [showAddHabit, setShowAddHabit] = useState(false);
 
-  const habitElements = userHabits.map(userHabit => {
-    return <Habit key={userHabit.id} userHabit={userHabit} handleClick={() => {
-      setCurrentUserHabit(userHabit)
-      setFetchMethod("PATCH")
-      setShowAddHabit(!showAddHabit)
-      setShowDelete(true)
-    }}/>
-  })
+  const habitElements = userHabits.map((userHabit) => {
+    return (
+      <Habit
+        key={userHabit.id}
+        userHabit={userHabit}
+        handleClick={() => {
+          setCurrentUserHabit(userHabit);
+          setFetchMethod("PATCH");
+          setShowAddHabit(!showAddHabit);
+        }}
+      />
+    );
+  });
 
   function handleAddHabit(newUserHabit) {
-    setShowAddHabit(false)
+    setShowAddHabit(false);
     if (fetchMethod === "POST") {
-      setUserHabits([...userHabits, newUserHabit])
+      setUserHabits([...userHabits, newUserHabit]);
     } else {
-      const updatedUserHabits = userHabits.map(userHabit => {
+      const updatedUserHabits = userHabits.map((userHabit) => {
         if (userHabit.id === newUserHabit.id) {
-          return newUserHabit
+          return newUserHabit;
         } else {
-          return userHabit
+          return userHabit;
         }
-      })
-      setUserHabits(updatedUserHabits)
+      });
+      setUserHabits(updatedUserHabits);
     }
   }
 
   function handleDelete(deletedUserHabit) {
-    setShowAddHabit(false)
-    const updatedUserHabits = userHabits.filter(userHabit => userHabit.id !== deletedUserHabit.id)
-    setUserHabits(updatedUserHabits)
+    setShowAddHabit(false);
+    const updatedUserHabits = userHabits.filter(
+      (userHabit) => userHabit.id !== deletedUserHabit.id
+    );
+    setUserHabits(updatedUserHabits);
   }
-  
+
   return (
     <>
       <div className="add-edit-button-div">
-        <button className="add-edit-button" onClick={() => {
-          setCurrentUserHabit(undefined)
-          setFetchMethod("POST")
-          setShowAddHabit(!showAddHabit)
-          setShowDelete(false)
-        }}
+        <button
+          className="add-edit-button"
+          onClick={() => {
+            setCurrentUserHabit(undefined);
+            setFetchMethod("POST");
+            setShowAddHabit(!showAddHabit);
+          }}
         >
           Add New Habit
         </button>
       </div>
-      {showAddHabit ?
-        <AddEditHabit 
-          user={user}  
-          currentUserHabit={currentUserHabit} 
-          fetchMethod={fetchMethod} 
-          toggleDeleteButton={showDelete}
-          onSubmit={handleAddHabit} 
+      {showAddHabit ? (
+        <AddEditHabit
+          user={user}
+          currentUserHabit={currentUserHabit}
+          fetchMethod={fetchMethod}
+          onSubmit={handleAddHabit}
           onCancel={() => setShowAddHabit(!showAddHabit)}
           onDelete={handleDelete}
         />
-        :
-        null
-      }
-      <div className="habit-list-elements-div">
-        {habitElements}
-      </div>
+      ) : null}
+      <div className="habit-list-elements-div">{habitElements}</div>
     </>
-  )
+  );
 }
-
-export default Habits;
