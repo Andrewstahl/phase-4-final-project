@@ -2,6 +2,8 @@
   --label-purple: rgb(84, 77, 184);
   --label-red: rgb(184, 77, 77);
   --label-grey: rgb(154, 154, 154);
+  --label-dark-grey: rgb(120, 120, 120);
+  --label-body: rgb(240, 242, 245);
 }
 
 body {
@@ -11,7 +13,7 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-color: #f0f2f5;
+  background-color: var(--label-body);
 }
 
 code {
@@ -28,15 +30,17 @@ label {
   font-weight: bolder;
 }
 
-form, div.login__signup__switch__container {
-  /* padding: 20px; */
-  /* margin: 5em 10em; */
-  max-width: 60%;
-  margin: auto
+form {
+  background-color: white;
+  padding: 25px;
+  margin-top: 50px;
+  margin-bottom: 50px;
+  box-shadow: 5px 10px 20px 0px rgba(0, 0, 0, 0.19);
 }
 
-form {
-  background-color: rgb(249, 246, 246);
+form, div.login__signup__switch__container {
+  max-width: 60%;
+  margin: auto
 }
 
 input[type=text], [type=password], [type=number], select, [type=date], [type=datetime-local], textarea {
@@ -106,54 +110,17 @@ button.add-edit-button {
 
 /* Habits */
 div.habit-list-elements-div, div.log-list-elements-div {
-  background-color: white;
-  /* margin: 20px 50px; */
   max-width: 60%;
-  /* align-content: center; */
-  /* display: flex; */
-  /* justify-content: center; */
-  /* align-items: center; */
   text-align: center;
   margin: auto;
   border: 10px;
-  /* border-radius: 25%; */
 }
 
-form.add-edit-habit-form {
-  padding: 20px;
-  border-color: #ccc;
-}
-
-div.user-habit-element-container {
-  border-color:#ccc;
-  border-width: 1px;
-  border-style: solid;
-  padding: 10px;
-  /* border-radius: 25px; */
-}
-
-div.user-habit-element-container > p {
+/* div.user-habit-element-container > p {
   font-size: large;
   font-weight: bold;
   margin-bottom: 0px
-}
-
-div.user-habit-element-container > span {
-  margin-bottom: 5px;
-}
-
-div.user-habit-element-container > table {
-  font-size:medium;
-  font-style: italic;
-  text-align: left;
-  margin: auto
-}
-
-button.user-habit-edit-button {
-  background-color: var(--label-purple);
-  color:white;
-  font-weight: bold
-}
+} */
 
 /* Profile */
 div.profile-change-container {
