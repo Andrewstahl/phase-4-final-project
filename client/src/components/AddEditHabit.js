@@ -1,39 +1,42 @@
-import React, { useCallback, useEffect, useState } from "react";
-import Error from "../styles/Error";
+import React, { useEffect, useState } from "react";
+import HabitForm from "./HabitForm";
 
-function AddEditHabit({ user, currentUserHabit, fetchMethod, toggleDeleteButton, onSubmit, onCancel, onDelete }) {
-  const [errors, setErrors] = useState([])
+export default function AddEditHabit({
+  user,
+  currentUserHabit,
+  fetchMethod,
+  onSubmit,
+  onCancel,
+  onDelete,
+}) {
+  const [errors, setErrors] = useState([]);
   const [habitData, setHabitData] = useState(() => {
-    if (currentUserHabit !== undefined)  {
-      return ({
+    if (currentUserHabit !== undefined) {
+      return {
         name: currentUserHabit.own_habit.name,
         option: currentUserHabit.option,
         amount: currentUserHabit.amount,
-        frequency: capitalizeEachWord(currentUserHabit.frequency)
-      })
+        frequency: capitalizeEachWord(currentUserHabit.frequency),
+      };
     } else {
-      return ({
+      return {
         name: "",
         option: "build",
         amount: 0,
-        frequency: "hour"
-      })
+        frequency: "hour",
+      };
     }
-  })
-
-  useEffect(() => {
-    window.scrollTo(0, 0)
-  }, [])
+  });
 
   function handleChange(e) {
-    e.preventDefault()
+    e.preventDefault();
     const name = e.target.name;
     const value = e.target.value;
-    
+
     setHabitData({
       ...habitData,
-      [name]: value
-    })
+      [name]: value,
+    });
   }
 
   function capitalizeEachWord(str) {
@@ -41,134 +44,55 @@ function AddEditHabit({ user, currentUserHabit, fetchMethod, toggleDeleteButton,
     for (var i = 0; i < arr.length; i++) {
       arr[i] = arr[i].charAt(0).toUpperCase() + arr[i].slice(1);
     }
-    return arr.join(" ")
+    return arr.join(" ");
   }
 
   function handleSubmit(e) {
-    e.preventDefault()
-    setErrors([])
+    e.preventDefault();
+    setErrors([]);
 
-    const habitUrlEnding = fetchMethod === "POST" ? "" : `${currentUserHabit.own_habit.id}`
+    const userHabitUrlEnding =
+      fetchMethod === "POST" ? "" : `${currentUserHabit.id}`;
 
-    fetch(`/habits/${habitUrlEnding}`, {
+    fetch(`/user_habits/${userHabitUrlEnding}`, {
       method: fetchMethod,
-      headers: {
-        "CONTENT-TYPE": "application/json"
-      },
+      headers: { "CONTENT-TYPE": "application/json" },
       body: JSON.stringify({
-        name: capitalizeEachWord(habitData.name)
-      })
-    })
-    .then((r) => {
+        user_id: user.id,
+        habit: capitalizeEachWord(habitData.name),
+        option: capitalizeEachWord(habitData.option),
+        amount: parseInt(habitData.amount),
+        frequency: capitalizeEachWord(habitData.frequency),
+      }),
+    }).then((r) => {
       if (r.ok) {
-        r.json().then((habitResponse => {
-          const userHabitUrlEnding = fetchMethod === "POST" ? "" : `${currentUserHabit.id}`
-          
-          fetch(`/user_habits/${userHabitUrlEnding}`, {
-            method: fetchMethod,
-            headers: {"CONTENT-TYPE": "application/json"},
-            body: JSON.stringify({
-              user_id: user.id,
-              habit_id: habitResponse.id,
-              option: capitalizeEachWord(habitData.option), 
-              amount: parseInt(habitData.amount),
-              frequency: capitalizeEachWord(habitData.frequency)
-            })
-          })
-          .then((r) => {
-            if (r.ok) {
-              r.json().then((userHabitResponse) => onSubmit(userHabitResponse))
-            } else {
-              r.json().then((err) => setErrors(err.errors));
-            }
-          })
-        }))
+        r.json().then((userHabitResponse) => onSubmit(userHabitResponse));
       } else {
         r.json().then((err) => setErrors(err.errors));
       }
-    })
+    });
   }
 
   function handleDelete(e) {
-    e.preventDefault()
-    setErrors([])
+    e.preventDefault();
+    setErrors([]);
     fetch(`/user_habits/${currentUserHabit.id}`, {
       method: "DELETE",
       headers: {
-        "CONTENT-TYPE": "application/json"
-      }
-    })
-    .then((r) => onDelete(currentUserHabit))
+        "CONTENT-TYPE": "application/json",
+      },
+    }).then((r) => onDelete(currentUserHabit));
   }
 
   return (
-    <div className="add-edit-habit-container">
-      <form className="add-edit-habit-form" onSubmit={handleSubmit}>
-        <label htmlFor="option">Option</label>
-        <select 
-          name="option" 
-          id="option" 
-          value={habitData.option} 
-          onChange={(e) => handleChange(e)}
-          required
-        >
-          <option value="build">Build</option>
-          <option value="break">Break</option>
-        </select>
-        <label htmlFor="name">Habit Name</label>
-        <input
-          type="text"
-          name="name"
-          id="name"
-          placeholder="Enter Habit Here"
-          value={habitData.name}
-          onChange={(e) => handleChange(e)}
-          required
-        />
-        <label htmlFor="amount">Amount</label>
-        <input
-          type="number"
-          minimum="0"
-          name="amount"
-          id="amount"
-          placeholder="Enter Amount Here"
-          value={habitData.amount}
-          onChange={(e) => handleChange(e)}
-          required
-        />
-        <label htmlFor="frequency">Frequency (Every)</label>
-        <select 
-          name="frequency" 
-          id="frequency" 
-          value={habitData.frequency} 
-          onChange={(e) => handleChange(e)}
-          required
-        >
-          <option default value="hour">Hour</option>
-          <option value="day">Day</option>
-          <option value="week">Week</option>
-          <option value="month">Month</option>
-          <option value="other">Other</option>
-        </select>
-        <div>
-          <p>I want to {habitData.option} the habit of {habitData.name} {habitData.amount > 0 ? habitData.amount : 0} {habitData.amount == 1 ? "time" : "times"} every {habitData.frequency}</p>
-        </div>
-        <div className="form-action-buttons">
-          <input type="submit" value="Submit" />
-          {toggleDeleteButton ? (
-            <button className="delete" onClick={(e) => handleDelete(e)}>Delete</button>
-          ) : null
-        }
-        <button className="cancel" onClick={onCancel}>Cancel</button>
-        </div>
-        <div>
-        {errors.map((error) => (
-          <Error key={error} error={error}></Error>
-        ))}
-      </div>
-      </form>
-    </div>    
-  )
+    <HabitForm
+      habitData={habitData}
+      currentUserHabit={currentUserHabit}
+      errors={errors}
+      onChange={handleChange}
+      onSubmit={handleSubmit}
+      onCancel={onCancel}
+      onDelete={handleDelete}
+    />
+  );
 }
-
-export default AddEditHabit
