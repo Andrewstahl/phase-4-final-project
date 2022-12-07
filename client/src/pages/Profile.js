@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Error from "../styles/Error";
 import toast, { Toaster } from "react-hot-toast"
 import Login from "./Login";
-import { useHistory, useRouteMatch } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 
 function Profile({ user }) {
   const [username, setUsername] = useState(user.username)
@@ -84,7 +84,6 @@ function Profile({ user }) {
       }).then((r) => {
         if (r.ok) {
           successDeleteNotify()
-          history('/')
           // return <Login />
           // fetch("/logout", {
           //   method: "DELETE",
