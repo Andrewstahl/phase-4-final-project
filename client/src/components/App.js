@@ -51,7 +51,7 @@ function App() {
             <Log user={user} />
           </Route>
           <Route exact path="/profile">
-            <Profile user={user}/>
+            <Profile user={user} setUser={setUser}/>
           </Route>
         </Switch>
       </main>
