@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useState, useCallback } from "react";
 import Error from "../styles/Error";
 import FormActionButtons from "./FormActionButtons";
+import CreateableSelect from 'react-select/creatable';
 
 export default function HabitForm({
   habitData,
@@ -11,6 +12,31 @@ export default function HabitForm({
   onCancel,
   onDelete,
 }) {
+  
+  const [isLoading, setIsLoading] = useState(false);
+  const [options, setOptions] = useState(
+    fetch('/habits')
+    .then(r => {
+      if (r.ok) {
+
+      } else {
+        r.json().then(errors => console.error(errors))
+      }
+    })
+  );
+  const [value, setValue] = useState();
+
+  const handleSelectChange = useCallback((inputValue) => setValue(inputValue), []);
+
+  const handleSelectCreate = useCallback(
+    (inputValue) => {
+      const newValue = { value: inputValue.toLowerCase(), label: inputValue };
+      setOptions([...options, newValue]);
+      setValue(newValue);
+    },
+    [options]
+  );
+
   return (
     <div className="add-edit-habit-container">
       <form className="add-edit-habit-form" onSubmit={onSubmit}>
@@ -26,7 +52,16 @@ export default function HabitForm({
           <option value="break">Break</option>
         </select>
         <label htmlFor="name">Habit Name</label>
-        <input
+        <CreatableSelect
+          isClearable
+          isDisabled={isLoading}
+          isLoading={isLoading}
+          onChange={(newValue) => setValue(newValue)}
+          onCreateOption={handleCreate}
+          options={options}
+          value={value}
+        />
+        {/* <input
           type="text"
           name="name"
           id="name"
@@ -34,7 +69,7 @@ export default function HabitForm({
           value={habitData.name}
           onChange={(e) => onChange(e)}
           required
-        />
+        /> */}
         <label htmlFor="amount">Amount</label>
         <input
           type="number"
