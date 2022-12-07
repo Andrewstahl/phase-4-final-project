@@ -1,6 +1,6 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
-import "../assets/NavBar.css"
+import "../assets/NavBar.css";
 
 const linkStyles = {
   width: "100%",
@@ -12,70 +12,63 @@ const linkStyles = {
   fontWeight: "bold",
   textAlign: "center",
   alignItems: "center",
-  verticalAlign: "center"
+  verticalAlign: "center",
 };
 
 const linkStylesActive = {
   ...linkStyles,
-  background: "white"
-}
+  background: "white",
+};
 
 const navLinkStyles = {
   display: "flex",
   borderTop: "1px solid purple",
   borderBottom: "1px solid purple",
   backgroundColor: "rgb(84, 77, 184)",
-  padding: "0px 100px"
-  // color: "white"
-}
+  padding: "0px 100px",
+};
 
 function NavBar({ setUser }) {
-
   function handleLogoutClick() {
     fetch("/logout", {
-      method: "DELETE"
-    })
-    .then((r) => {
+      method: "DELETE",
+    }).then((r) => {
       if (r.ok) {
-        setUser(null)
+        setUser(null);
       }
-    })
+    });
   }
 
   return (
     <div className="navbar-div">
       <div style={{ ...navLinkStyles }}>
-        <NavLink 
+        <NavLink
           to="/"
           exact
-          style={({ isActive }) => (
-            isActive ? linkStylesActive : linkStyles 
-          )}
+          style={({ isActive }) => (isActive ? linkStylesActive : linkStyles)}
         >
           Habits
         </NavLink>
-        <NavLink 
+        <NavLink
           to="/log"
           exact
-          style={({ isActive }) => (
-            isActive ? linkStylesActive : linkStyles 
-          )}
+          style={({ isActive }) => (isActive ? linkStylesActive : linkStyles)}
         >
           Daily Log
         </NavLink>
-        <NavLink 
+        <NavLink
           to="/profile"
           exact
-          style={({ isActive }) => (
-            isActive ? linkStylesActive : linkStyles 
-          )}
+          style={({ isActive }) => (isActive ? linkStylesActive : linkStyles)}
         >
           Profile
         </NavLink>
       </div>
-      <button className="logout-button" onClick={handleLogoutClick}>Logout</button>
+      <button className="logout-button" onClick={handleLogoutClick}>
+        Logout
+      </button>
     </div>
-  )
+  );
 }
 
-export default NavBar
+export default NavBar;

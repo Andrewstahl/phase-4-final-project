@@ -8,7 +8,7 @@ export default function ProfileForm({
   onChange,
   onUsernameSubmit,
   onPasswordSubmit,
-  onDelete
+  onDelete,
 }) {
   return (
     <div className="profile-change-container">

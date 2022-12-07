@@ -8,25 +8,25 @@ function SignUpForm({ onLogin }) {
   const [errors, setErrors] = useState([]);
 
   function handleSubmit(e) {
-    e.preventDefault()
-    setErrors([])
+    e.preventDefault();
+    setErrors([]);
     fetch("/signup", {
       method: "POST",
       headers: {
-        "CONTENT-TYPE": "application/json"
+        "CONTENT-TYPE": "application/json",
       },
       body: JSON.stringify({
         username,
         password,
-        password_confirmation: passwordConfirmation
-      })
+        password_confirmation: passwordConfirmation,
+      }),
     }).then((r) => {
       if (r.ok) {
-        r.json().then(user => onLogin(user))
+        r.json().then((user) => onLogin(user));
       } else {
-        r.json().then((err) => setErrors(err.errors))
+        r.json().then((err) => setErrors(err.errors));
       }
-    })
+    });
   }
 
   return (
@@ -78,7 +78,7 @@ function SignUpForm({ onLogin }) {
         </div>
       </form>
     </>
-  )
+  );
 }
 
 export default SignUpForm;

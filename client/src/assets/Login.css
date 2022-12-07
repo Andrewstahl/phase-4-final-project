@@ -12,22 +12,22 @@ button.login__signup__switch__button {
 h1.login-page-header {
   text-align: center;
   margin-top: 50px;
-  font-family: Georgia, 'Times New Roman', Times, serif;
+  font-family: Georgia, "Times New Roman", Times, serif;
   font-size: 40px;
 }
 
 h3 {
-  width: 100%; 
+  width: 100%;
   text-align: center;
   color: var(--label-dark-grey);
-  border-bottom: 1px solid var(--label-grey); 
+  border-bottom: 1px solid var(--label-grey);
   line-height: 0.1em;
   margin: 50px 0 20px;
   font-style: italic;
   font-weight: normal;
-} 
+}
 
-h3 span { 
-   background: var(--label-body); 
-   padding:0 10px; 
+h3 span {
+  background: var(--label-body);
+  padding: 0 10px;
 }

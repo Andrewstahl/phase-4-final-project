@@ -13,7 +13,6 @@ export default function LogForm({
   onCancel,
   onDelete,
 }) {
-  
   const habitOptions = user.user_habits.map((user_habit) => {
     return (
       <option key={user_habit.own_habit.id}>{user_habit.own_habit.name}</option>
