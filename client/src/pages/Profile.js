@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Error from "../styles/Error";
 import toast, { Toaster } from "react-hot-toast"
 import Login from "./Login";
+import { useHistory, useRouteMatch } from "react-router-dom";
 
 function Profile({ user }) {
   const [username, setUsername] = useState(user.username)
@@ -10,11 +11,16 @@ function Profile({ user }) {
   const [deleteConfirmation, setDeleteConfirmation] = useState("")
   const [errors, setErrors] = useState([])
 
-  const successNotify = () => toast.success("Account Updated")
+  const successUsernameNotify = () => toast.success("Username has been updated!")
+  const successPasswordNotify = () => toast.success("Password has been updated!")
+  const successDeleteNotify = () => toast.success("Your account has been deleted! You will now be logged out.")
   const failureNotify = () => toast.error("Account Not Updated (see errors)")
+  
+  const history = useHistory()
 
   function handleUsernameSubmit(e) {
     e.preventDefault()
+    setErrors([])
     
     fetch("/me", {
       method: "PATCH",
@@ -24,8 +30,8 @@ function Profile({ user }) {
       body: JSON.stringify({username})
     }).then((r) => {
       if (r.ok) {
-        successNotify("Username has been updated")
-        setUsername("")
+        successUsernameNotify()
+        r.json().then((user) => setUsername(user.username))
       } else {
         r.json().then((err) => setErrors(err.errors))
       } 
@@ -35,32 +41,40 @@ function Profile({ user }) {
   function handlePasswordSubmit(e) {
     e.preventDefault()
     setErrors([])
-    fetch("/me", {
-      method: "PATCH",
-      headers: {
-        "CONTENT-TYPE": "application/json"
-      },
-      body: JSON.stringify({
-        password, 
-        password_confirmation: passwordConfirmation
+
+    if (password === "") {
+      failureNotify()
+      setErrors(["Password cannot be blank"])
+    } else {
+      fetch("/me", {
+        method: "PATCH",
+        headers: {
+          "CONTENT-TYPE": "application/json"
+        },
+        body: JSON.stringify({
+          password, 
+          password_confirmation: passwordConfirmation
+        })
+      }).then((r) => {
+        if (r.ok) {
+          successPasswordNotify("Password has been updated!")
+          setPassword("")
+          setPasswordConfirmation("")
+        } else {
+          failureNotify()
+          r.json().then((err) => setErrors(err.errors))
+        } 
       })
-    }).then((r) => {
-      if (r.ok) {
-        successNotify("Password has been updated!")
-        setPassword("")
-        setPasswordConfirmation("")
-      } else {
-        failureNotify("Password has not been update")
-        r.json().then((err) => setErrors(err.errors))
-      } 
-    })
+    }
+
   }
 
   function handleDeleteSubmit(e) {
     e.preventDefault()
     setErrors([])
     if (deleteConfirmation.toLowerCase() !== "delete") {
-      failureNotify("Please enter the word 'Delete' into the delete box and try again")
+      failureNotify()
+      setErrors(["Please enter in 'Delete' into the text box and try again"])
     } else {
       fetch("/me", {
         method: "DELETE",
@@ -69,13 +83,15 @@ function Profile({ user }) {
         }
       }).then((r) => {
         if (r.ok) {
-          successNotify("Account has been deleted!")
-          fetch("/logout", {
-            method: "DELETE",
-            headers: {
-              "CONTENT-TYPE": "application/json"
-            }
-          }).then((r) => <Login />)
+          successDeleteNotify()
+          history('/')
+          // return <Login />
+          // fetch("/logout", {
+          //   method: "DELETE",
+          //   headers: {
+          //     "CONTENT-TYPE": "application/json"
+          //   }
+          // }).then((r) => {return (<Login />)})
         } else {
           failureNotify()
           r.json().then((err) => setErrors(err.errors))
@@ -83,7 +99,7 @@ function Profile({ user }) {
       })
     }
   }
-  
+
   return (
     <>
       <Toaster />
