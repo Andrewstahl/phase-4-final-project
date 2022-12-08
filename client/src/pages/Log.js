@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import AddEditLog from "../components/AddEditLog";
 import LogEntry from "../components/LogEntry";
+import '../assets/Log.css'
 
 function Log({ user }) {
   const [logs, setLogs] = useState(user.logs);
@@ -9,7 +10,7 @@ function Log({ user }) {
   const [showAddLog, setShowAddLog] = useState(false);
   const [showDelete, setShowDelete] = useState(false);
 
-  const logElements = logs.map((log) => {
+  const logElements = Array.from(logs).reverse().map((log) => {
     return (
       <LogEntry
         key={log.id}
