@@ -108,7 +108,8 @@ div.add-edit-button-div {
   margin: 20px;
 }
 
-button.add-edit-button {
+button.add-edit-button,
+button.log-edit-button {
   margin: 5px;
   height: 50px;
   font-size: large;
@@ -123,6 +124,16 @@ div.log-list-elements-div {
   text-align: center;
   margin: auto;
   border: 10px;
+}
+
+div.user-habit-element-container,
+div.log-element-container {
+  box-shadow: 5px 5px 20px 0px rgba(0, 0, 0, 0.19);
+  max-width: 75%;
+  margin: auto;
+  background-color: white;
+  margin-top: 20px;
+  padding: 20px;
 }
 
 /* Profile */
