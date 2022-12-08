@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import AddEditLog from "../components/AddEditLog";
 import LogEntry from "../components/LogEntry";
-import '../assets/Log.css'
+import "../assets/Log.css";
 
 function Log({ user }) {
   const [logs, setLogs] = useState(user.logs);
@@ -10,20 +10,22 @@ function Log({ user }) {
   const [showAddLog, setShowAddLog] = useState(false);
   const [showDelete, setShowDelete] = useState(false);
 
-  const logElements = Array.from(logs).reverse().map((log) => {
-    return (
-      <LogEntry
-        key={log.id}
-        log={log}
-        handleClick={() => {
-          setCurrentLog(log);
-          setFetchMethod("PATCH");
-          setShowAddLog(!showAddLog);
-          setShowDelete(true);
-        }}
-      />
-    );
-  });
+  const logElements = Array.from(logs)
+    .reverse()
+    .map((log) => {
+      return (
+        <LogEntry
+          key={log.id}
+          log={log}
+          handleClick={() => {
+            setCurrentLog(log);
+            setFetchMethod("PATCH");
+            setShowAddLog(!showAddLog);
+            setShowDelete(true);
+          }}
+        />
+      );
+    });
 
   function handleAddLog(newLog) {
     setShowAddLog(false);
