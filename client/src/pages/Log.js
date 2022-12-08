@@ -3,7 +3,7 @@ import AddEditLog from "../components/AddEditLog";
 import LogEntry from "../components/LogEntry";
 import "../assets/Log.css";
 
-function Log({ user }) {
+function Log({ user, userHabits }) {
   const [logs, setLogs] = useState(user.logs);
   const [currentLog, setCurrentLog] = useState(undefined);
   const [fetchMethod, setFetchMethod] = useState("POST");
@@ -67,6 +67,7 @@ function Log({ user }) {
       {showAddLog ? (
         <AddEditLog
           user={user}
+          userHabits={userHabits}
           currentLog={currentLog}
           fetchMethod={fetchMethod}
           toggleDeleteButton={showDelete}

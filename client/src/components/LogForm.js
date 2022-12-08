@@ -3,7 +3,7 @@ import Error from "../styles/Error";
 import FormActionButtons from "./FormActionButtons";
 
 export default function LogForm({
-  user,
+  userHabits,
   logData,
   textarea,
   currentLog,
@@ -13,7 +13,7 @@ export default function LogForm({
   onCancel,
   onDelete,
 }) {
-  const habitOptions = user.user_habits.map((user_habit) => {
+  const habitOptions = userHabits.map((user_habit) => {
     return (
       <option key={user_habit.own_habit.id}>{user_habit.own_habit.name}</option>
     );

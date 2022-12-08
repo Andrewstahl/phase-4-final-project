@@ -4,6 +4,7 @@ import moment from "moment";
 
 export default function AddEditLog({
   user,
+  userHabits,
   currentLog,
   fetchMethod,
   onSubmit,
@@ -84,7 +85,7 @@ export default function AddEditLog({
 
   return (
     <LogForm
-      user={user}
+      userHabits={userHabits}
       logData={logData}
       currentLog={currentLog}
       errors={errors}
