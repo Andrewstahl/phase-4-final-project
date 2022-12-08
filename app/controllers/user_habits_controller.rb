@@ -34,7 +34,7 @@ class UserHabitsController < ApplicationController
   # PATCH/PUT /user_habits/:id
   def update
     user_habit = UserHabit.find(params[:id])
-    user_habit.update!(user_habits_params)
+    user_habit.update!(user_habits_no_habit_params)
     render json: user_habit
   end
 
@@ -49,6 +49,10 @@ class UserHabitsController < ApplicationController
 
   def user_habits_params
     params.permit(:user_id, :habit_id, :option, :amount, :frequency, :habit)
+  end
+  
+  def user_habits_no_habit_params
+    params.permit(:user_id, :option, :amount, :frequency)
   end
 
   def render_unprocessable_entity(invalid)
