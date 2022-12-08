@@ -1,7 +1,7 @@
-import React, { useState, useCallback } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import Error from "../styles/Error";
 import FormActionButtons from "./FormActionButtons";
-import CreateableSelect from 'react-select/creatable';
+import CreatableSelect from "react-select/creatable";
 
 export default function HabitForm({
   habitData,
@@ -12,27 +12,37 @@ export default function HabitForm({
   onCancel,
   onDelete,
 }) {
-  
   const [isLoading, setIsLoading] = useState(false);
-  const [options, setOptions] = useState(
-    fetch('/habits')
-    .then(r => {
-      if (r.ok) {
-
-      } else {
-        r.json().then(errors => console.error(errors))
-      }
-    })
-  );
+  const [options, setOptions] = useState([]);
   const [value, setValue] = useState();
 
-  const handleSelectChange = useCallback((inputValue) => setValue(inputValue), []);
+  useEffect(() => {
+    fetch("/habits").then((r) => {
+      if (r.ok) {
+        r.json().then((habits) => {
+          const habitOptions = habits.map((habit) => {
+            return {
+              value: habit.name.toLowerCase().replace(" ", "_"),
+              label: habit.name,
+            };
+          });
+          setOptions(habitOptions);
+        });
+      } else {
+        r.json().then((errors) => console.error(errors));
+      }
+    });
+  }, []);
 
   const handleSelectCreate = useCallback(
     (inputValue) => {
-      const newValue = { value: inputValue.toLowerCase(), label: inputValue };
+      const newValue = {
+        value: inputValue.toLowerCase().replace(" ", "_"),
+        label: inputValue,
+      };
       setOptions([...options, newValue]);
       setValue(newValue);
+      onChange(newValue);
     },
     [options]
   );
@@ -51,25 +61,20 @@ export default function HabitForm({
           <option value="build">Build</option>
           <option value="break">Break</option>
         </select>
-        <label htmlFor="name">Habit Name</label>
-        <CreatableSelect
-          isClearable
-          isDisabled={isLoading}
-          isLoading={isLoading}
-          onChange={(newValue) => setValue(newValue)}
-          onCreateOption={handleCreate}
-          options={options}
-          value={value}
-        />
-        {/* <input
-          type="text"
-          name="name"
-          id="name"
-          placeholder="Enter Habit Here"
-          value={habitData.name}
-          onChange={(e) => onChange(e)}
-          required
-        /> */}
+        {currentUserHabit === undefined ? (
+          <>
+            <label htmlFor="name">Habit Name</label>
+            <CreatableSelect
+              isClearable
+              isDisabled={isLoading}
+              isLoading={isLoading}
+              options={options}
+              onChange={(e) => onChange(e)}
+              onCreateOption={handleSelectCreate}
+              value={value}
+            />
+          </>
+        ) : null}
         <label htmlFor="amount">Amount</label>
         <input
           type="number"
