@@ -9,7 +9,7 @@ export default function Habits({ user }) {
   const [fetchMethod, setFetchMethod] = useState("POST");
   const [showAddHabit, setShowAddHabit] = useState(false);
 
-  const habitElements = userHabits.map((userHabit) => {
+  const habitElements = Array.from(userHabits).reverse().map((userHabit) => {
     return (
       <Habit
         key={userHabit.id}
