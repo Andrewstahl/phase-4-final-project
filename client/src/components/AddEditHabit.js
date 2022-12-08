@@ -29,14 +29,21 @@ export default function AddEditHabit({
   });
 
   function handleChange(e) {
-    e.preventDefault();
-    const name = e.target.name;
-    const value = e.target.value;
+    if ("label" in e) {
+      setHabitData({
+        ...habitData,
+        name: e.label,
+      });
+    } else {
+      e.preventDefault();
+      const name = e.target.name;
+      const value = e.target.value;
 
-    setHabitData({
-      ...habitData,
-      [name]: value,
-    });
+      setHabitData({
+        ...habitData,
+        [name]: value,
+      });
+    }
   }
 
   function capitalizeEachWord(str) {
