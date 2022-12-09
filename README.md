@@ -67,6 +67,6 @@ The "Profile" page will allow the user to change their credentials. They can cha
 - [Create-React-App for starter client repository](https://github.com/facebook/create-react-app)
 
 ## Additional Posts
-- [YouTube walkthrough of the project](https://youtu.be/X9J78frWORc)
+- [YouTube walkthrough of the project](https://youtu.be/usV88ABxVno)
 - [Medium blog post about creating your own API with Active Record and Sinatra](https://medium.com/@andrewstahlsoftware/creating-your-own-back-end-and-api-with-ruby-part-1-migrations-with-active-record-161deb9a2b6f)
 
