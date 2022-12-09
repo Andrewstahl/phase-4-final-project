@@ -35,7 +35,7 @@ class LogsController < ApplicationController
   # PATCH/PUT /logs/:id
   def update
     @log = Log.find(params[:id])
-    @log.update!(log_params)
+    @log.update!(log_no_habit_params)
     render json: @log
   end
   
@@ -50,6 +50,10 @@ class LogsController < ApplicationController
 
   def log_params
     params.permit(:user_id, :habit_id, :amount, :date, :description, :habit)
+  end
+
+  def log_no_habit_params
+    params.permit(:user_id, :amount, :date, :description)
   end
 
   def render_unprocessable_entity_response(invalid)
