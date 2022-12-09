@@ -31,7 +31,7 @@ I built this project using a PostgreSQL database since that allowed me to deploy
 This app acts as a habit tracker and log for users to live their best lives. Whether you want to start exercising or quit smoking, this will help you hold yourself accountable and check in with that's most important to you. This leverages a homegrown API utilizing Ruby, ActiveRecord, and Sinatra with separate but connected databases for users, habits, and logs.  Leveraging React, the client-side also uses different links that render data pertinent to what the user wants to see.
 
 Check out this gif for a quick walkthrough of the final project (this might take about 15-25 seconds to load):
-![](https://github.com/Andrewstahl/phase-3-final-project/blob/main/media/Flatiron%20Phase%203%20-%20Book%20Tracker%20Walkthrough.gif)
+![](https://github.com/Andrewstahl/phase-4-final-project/blob/main/media/Flatiron%20Phase%204%20-%20Habit%20Tracker%20Walkthrough.gif)
 
 ## Database Migration Structure
 Here is a quick visual for the database structure.
