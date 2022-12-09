@@ -28,11 +28,8 @@ export default function AddEditLog({
     }
   });
   const [textarea, setTextArea] = useState(() => {
-    console.log(currentLog)
     return currentLog !== undefined ? currentLog.description : "";
   });
-
-  console.log(textarea)
 
   function handleChange(e) {
     e.preventDefault();
