@@ -13,7 +13,6 @@ import Log from "../pages/Log";
  * ├─── Login Page
  *      ├─── Login
  *      ├─── Signup
- * ├─── Header
  * ├─── NavBar
  * ├─── Personal Habits
  *      ├─── Habit
@@ -29,14 +28,13 @@ import Log from "../pages/Log";
 
 function App() {
   const [user, setUser] = useState(null);
-  const [userHabits, setUserHabits] = useState(null);
+  const [userHabits, setUserHabits] = useState([]);
 
   useEffect(() => {
     fetch("/me").then((r) => {
       if (r.ok) {
         r.json().then((user) => {
-          setUser(user);
-          setUserHabits(user.user_habits);
+          handleLogin(user)
         });
       }
     });
@@ -64,11 +62,21 @@ function App() {
     setUserHabits(updatedUserHabits);
   }
 
-  if (!user) return <Login onLogin={setUser} />;
+  function handleLogin(user) {
+    setUser(user)
+    setUserHabits(user.user_habits)
+  }
+
+  function handleLogout() {
+    setUser(null)
+    setUserHabits([])
+  }
+
+  if (!user) return <Login onLogin={handleLogin} />;
 
   return (
     <BrowserRouter>
-      <NavBar setUser={setUser} />
+      <NavBar onLogout={handleLogout} />
       <main>
         <Switch>
           <Route exact path="/">

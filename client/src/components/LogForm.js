@@ -31,7 +31,7 @@ export default function LogForm({
           onChange={(e) => onChange(e)}
           required
         >
-          <option default disabled>
+          <option default>
             Select a Habit
           </option>
           {habitOptions}

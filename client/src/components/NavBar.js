@@ -28,13 +28,13 @@ const navLinkStyles = {
   padding: "0px 100px",
 };
 
-function NavBar({ setUser }) {
+function NavBar({ setUser, onLogout }) {
   function handleLogoutClick() {
     fetch("/logout", {
       method: "DELETE",
     }).then((r) => {
       if (r.ok) {
-        setUser(null);
+        onLogout()
       }
     });
   }
