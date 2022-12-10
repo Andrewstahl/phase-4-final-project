@@ -68,5 +68,5 @@ The "Profile" page will allow the user to change their credentials. They can cha
 
 ## Additional Posts
 - [YouTube walkthrough of the project](https://youtu.be/usV88ABxVno)
-- [Medium blog post about creating your own API with Active Record and Sinatra](https://medium.com/@andrewstahlsoftware/creating-your-own-back-end-and-api-with-ruby-part-1-migrations-with-active-record-161deb9a2b6f)
+- [Medium blog post about getting started with cookies and sessions on Rails](https://andrewstahlsoftware.medium.com/getting-started-with-cookies-session-management-ruby-on-rails-project-7878d8995cce)
 
