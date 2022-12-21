@@ -30,3 +30,5 @@
 
 # Ignore byebug history
 .byebug_history
+
+/app/controllers/search_controller.rb
