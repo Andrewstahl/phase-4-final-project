@@ -38,6 +38,7 @@ class UserHabitsController < ApplicationController
       render json: @user_habit
     else
       render_not_authorized_response
+    end
   end
 
   # DELETE /user_habits/:id
@@ -77,7 +78,7 @@ class UserHabitsController < ApplicationController
   end
 
   def render_not_authorized_response
-    render json: { error: "Not Authorized" }
+    render json: { error: "You cannot make a change to a habit that does not belong to your account" }
   end
 
 end

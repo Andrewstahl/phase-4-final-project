@@ -80,7 +80,7 @@ class LogsController < ApplicationController
   end
 
   def render_not_authorized_response
-    render json: { error: "Not Authorized" }
+    render json: { error: "You cannot make a change to a log that does not belong to your account" }
   end
 
 end
